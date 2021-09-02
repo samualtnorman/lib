@@ -15,7 +15,7 @@ export function stringToBuffer(string: string) {
     return new Uint8Array(u8View.buffer, u8View[0] + 1)
 }
 
-export function runCommand(command: string) {
+export export function runCommand(command: string) {
 	return new Promise<string>((resolve, reject) => {
 		exec(command, (error, stdout) => {
 			if (error)
@@ -24,4 +24,27 @@ export function runCommand(command: string) {
 			resolve(stdout)
 		})
 	})
+}
+
+export function iterateXY(callback: (x: number, y: number) => boolean | void) {
+	let x = 0
+	let y = 0
+
+	while (callback(x, y) != false) {
+		if (!x) {
+			x = y + 1
+			y = 0
+		} else if (x > y)
+			y++
+		else
+			x--
+	}
+}
+
+export function sigmoid(input: number) {
+	return 1 / (1 + (Math.E ** -input))
+}
+
+export function lerp(a: number, b: number, amount: number) {
+	return a + ((b - a) * amount)
 }
