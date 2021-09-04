@@ -48,3 +48,7 @@ export function sigmoid(input: number) {
 export function lerp(a: number, b: number, amount: number) {
 	return a + ((b - a) * amount)
 }
+
+function is<C extends Function>(object: {}, constructor: C): object is C["prototype"] {
+	return Object.getPrototypeOf(object) == constructor.prototype
+}
