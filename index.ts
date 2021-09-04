@@ -26,11 +26,10 @@ export export function runCommand(command: string) {
 	})
 }
 
-export function iterateXY(callback: (x: number, y: number) => boolean | void) {
-	let x = 0
-	let y = 0
+function* iterateXY(x = 0, y = 0): Generator<{ x: number, y: number }, never, never> {
+	while (true) {
+		yield { x, y }
 
-	while (callback(x, y) != false) {
 		if (!x) {
 			x = y + 1
 			y = 0
