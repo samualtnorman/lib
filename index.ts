@@ -26,7 +26,7 @@ export export function runCommand(command: string) {
 	})
 }
 
-function* iterateXY(x = 0, y = 0): Generator<{ x: number, y: number }, never, never> {
+export function* iterateXY(x = 0, y = 0): Generator<{ x: number, y: number }, never, never> {
 	while (true) {
 		yield { x, y }
 
@@ -48,6 +48,31 @@ export function lerp(a: number, b: number, amount: number) {
 	return a + ((b - a) * amount)
 }
 
-function is<C extends Function>(object: {}, constructor: C): object is C["prototype"] {
+export function is<C extends Function>(object: {}, constructor: C): object is C["prototype"] {
 	return Object.getPrototypeOf(object) == constructor.prototype
+}
+
+export class DynamicMap<K, V> extends Map<K, V> {
+	constructor(private fallbackHandler: (key: K) => V) { super() }
+
+	get(key: K) {
+		if (this.has(key))
+			return super.get(key)!
+
+		const value = this.fallbackHandler(key)
+
+		this.set(key, value)
+
+		return value
+	}
+}
+
+
+export class CustomError extends Error {
+	name = this.constructor.name
+}
+
+export function assert(value: any, message = "assertion failed"): asserts value {
+	if (!value)
+		throw new Error(message)
 }
