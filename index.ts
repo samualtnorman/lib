@@ -130,7 +130,6 @@ export async function findFiles(path: string, filter: string[] | ((name: string)
 }
 
 export async function findFilesSub(path: string, filterFunction: (name: string) => boolean, paths: string[]) {
-	/** @type {Promise[]} */
 	const promises: Promise<any>[] = []
 
 	for (const dirent of await readDirectory(path, { withFileTypes: true })) {
