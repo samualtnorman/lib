@@ -110,7 +110,7 @@ export async function findFiles(path: string, filter: string[] | ((name: string)
 	let filterFunction: (name: string) => boolean
 
 	if (Array.isArray(filter))
-		filterFunction = Array.prototype.includes.bind(filterFunction)
+		filterFunction = Array.prototype.includes.bind(filter)
 	else
 		filterFunction = filter
 
