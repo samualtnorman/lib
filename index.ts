@@ -110,7 +110,7 @@ export async function findFiles(path: string, filter: string[] | ((name: string)
 	let filterFunction: (name: string) => boolean
 
 	if (Array.isArray(filter))
-		filterFunction = Array.prototype.includes.bind(filter)
+		filterFunction = name => !filter.includes(name)
 	else
 		filterFunction = filter
 
@@ -123,7 +123,7 @@ export async function findFiles(path: string, filter: string[] | ((name: string)
 		if (dirent.isDirectory())
 			await findFilesSub(direntPath, filterFunction, paths)
 		else if (dirent.isFile())
-			paths.push(path)
+			paths.push(direntPath)
 	}
 
 	return paths
@@ -141,7 +141,7 @@ export async function findFilesSub(path: string, filterFunction: (name: string) 
 		if (dirent.isDirectory())
 			promises.push(findFilesSub(direntPath, filterFunction, paths))
 		else if (dirent.isFile())
-			paths.push(path)
+			paths.push(direntPath)
 	}
 
 	await Promise.all(promises)
