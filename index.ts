@@ -97,8 +97,6 @@ export function tryCatch<CallbackReturn, ThenReturn, CatchReturn>(callback: () =
 	return callbackReturn
 }
 
-
-
 /**
  * @param path the directory to start recursively finding files in
  * @param filter either a blacklist or a filter function that returns false to ignore file name
