@@ -4,21 +4,21 @@ import { promises as fsPromises } from "fs"
 const { readdir: readDirectory } = fsPromises
 
 export function bufferToString(bufferU8View: Uint8Array) {
-    const offset = 1 - (bufferU8View.length % 2)
-    const u8View = new Uint8Array(bufferU8View.length + offset + 1)
+	const offset = 1 - (bufferU8View.length % 2)
+	const u8View = new Uint8Array(bufferU8View.length + offset + 1)
 
-    u8View[0] = offset
-    u8View.set(bufferU8View, offset + 1)
+	u8View[0] = offset
+	u8View.set(bufferU8View, offset + 1)
 
-    return String.fromCharCode(...new Uint16Array(u8View.buffer))
+	return String.fromCharCode(...new Uint16Array(u8View.buffer))
 }
 
 export function stringToBuffer(string: string) {
-    const u8View = new Uint8Array(new Uint16Array(string.split("").map(char => char.charCodeAt(0))).buffer)
-    return new Uint8Array(u8View.buffer, u8View[0] + 1)
+	const u16Array = new Uint16Array(string.split("").map(char => char.charCodeAt(0)))
+	return new Uint8Array(u16Array.buffer.slice((u16Array[0] & 0b11111111) + 1))
 }
 
-export export function runCommand(command: string) {
+export function runCommand(command: string) {
 	return new Promise<string>((resolve, reject) => {
 		exec(command, (error, stdout) => {
 			if (error)
