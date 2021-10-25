@@ -70,7 +70,6 @@ export class DynamicMap<K, V> extends Map<K, V> {
 	}
 }
 
-
 export class CustomError extends Error {
 	name = this.constructor.name
 }
