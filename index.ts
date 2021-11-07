@@ -74,9 +74,11 @@ export class CustomError extends Error {
 	name = this.constructor.name
 }
 
+export class AssertError extends Error {}
+
 export function assert(value: any, message = "assertion failed"): asserts value {
 	if (!value)
-		throw new Error(message)
+		throw new AssertError(message)
 }
 
 export function tryCatch<CallbackReturn, CatchReturn>(callback: () => CallbackReturn, catchCallback: (error: unknown) => CatchReturn): CallbackReturn | CatchReturn
