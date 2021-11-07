@@ -74,7 +74,7 @@ export class CustomError extends Error {
 	name = this.constructor.name
 }
 
-export class AssertError extends Error {}
+export class AssertError extends CustomError {}
 
 export function assert(value: any, message = "assertion failed"): asserts value {
 	if (!value)
