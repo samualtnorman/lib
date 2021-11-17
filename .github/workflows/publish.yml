@@ -1,0 +1,42 @@
+name: Publish
+
+on:
+  push:
+    branches:
+    - main
+
+  release:
+    types:
+    - created
+
+  pull_request:
+    types:
+      - closed
+
+jobs:
+  publish:
+    name: Publish
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: actions/checkout@v2
+
+    - name: Setup node
+      uses: actions/setup-node@v1
+      with:
+        node-version: 14
+
+    - run: git config --global user.email github-action@users.noreply.github.com
+    - run: git config --global user.name "Github Action"
+    - run: npm ci
+    - run: npm config set //registry.npmjs.org/:_authToken ${{ secrets.NPM_TOKEN }}
+
+    - name: Publish dev
+      if: github.event_name == 'push' || github.event_name == 'pull_request' && github.event.pull_request.merged
+      run: |
+        node scripts/version-dev
+        npm publish --tag dev
+
+    - name: Publish release
+      if: github.event_name == 'release'
+      run: npm publish
