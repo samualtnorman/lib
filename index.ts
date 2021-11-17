@@ -280,3 +280,10 @@ export class BitStream {
 export function wait(milliseconds: number) {
 	return new Promise(resolve => setTimeout(resolve, milliseconds))
 }
+
+export function* findMatches(regex: RegExp, string: string) {
+	let current
+
+	while (current = regex.exec(string))
+		yield { index: current.index, match: current[0] }
+}
