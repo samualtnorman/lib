@@ -23,8 +23,11 @@
 	"types": "index.d.ts",
 	"type": "module",
 	"exports": {
-		"require": "./index.cjs",
-		"import": "./index.js"
+		".": {
+			"import": "./index.js",
+			"require": "./index.cjs"
+		},
+		"./*": "./*"
 	},
 	"files": [
 		"*.js",
