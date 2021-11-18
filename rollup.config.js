@@ -23,8 +23,13 @@ const findFilesPromise = findFiles(sourceDirectory)
 
 /** @type {(command: Record<string, unknown>) => Promise<RollupOptions>} */
 export default async ({ w }) => {
-	if (!w)
-		plugins.push(terser())
+	if (!w) {
+		plugins.push(terser({
+			ecma: 2019,
+			keep_classnames: true,
+			keep_fnames: true
+		}))
+	}
 
 	return {
 		input: Object.fromEntries(
