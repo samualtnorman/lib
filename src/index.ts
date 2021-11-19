@@ -1,6 +1,7 @@
 export { assert } from "./assert"
 export { BitStream } from "./BitStream"
 export { bufferToString, stringToBuffer } from "./bufferToString"
+export { clearObject } from "./clearObject"
 export { combineAsyncGeneratorsParallel } from "./combineAsyncGeneratorsParallel"
 export { copyFilePersistent } from "./copyFilePersistent"
 export { CustomError } from "./CustomError"
