@@ -4,7 +4,7 @@
 	"main": "index.js",
 	"private": true,
 	"scripts": {
-		"build": "rm -rf dist && rollup --config && node scripts/build-package-json && tsc --project src && cp LICENSE index.cjs package-lock.json README.md dist",
+		"build": "rm -rf dist && rollup --config && tsc --project src && node scripts/build-package-json && cp LICENSE index.cjs package-lock.json README.md dist",
 		"dev": "rollup --config --watch"
 	},
 	"repository": {
