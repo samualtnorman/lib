@@ -38,7 +38,7 @@ export default async ({ w }) => {
 				.map(path => [ path.slice(sourceDirectory.length + 1, -3), path ])
 		),
 		output: {
-			dir: "."
+			dir: "dist"
 		},
 		plugins,
 		external: [

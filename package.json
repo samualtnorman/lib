@@ -2,10 +2,10 @@
 	"name": "@samual/lib",
 	"version": "0.1.0",
 	"main": "index.js",
+	"private": true,
 	"scripts": {
-		"build": "rollup --config && tsc --project src",
-		"dev": "rollup --config --watch",
-		"prepublishOnly": "npm run build"
+		"build": "rm -rf dist && rollup --config && node scripts/build-package-json && tsc --project src && cp LICENSE index.cjs package-lock.json README.md dist",
+		"dev": "rollup --config --watch"
 	},
 	"repository": {
 		"type": "git",
@@ -29,12 +29,7 @@
 		},
 		"./*": "./*"
 	},
-	"files": [
-		"*.js",
-		"*.d.ts",
-		"!*.config.js",
-		"index.cjs"
-	],
+	"files": [ "*" ],
 	"devDependencies": {
 		"@babel/core": "^7.16.0",
 		"@babel/preset-env": "^7.16.4",
