@@ -1,5 +1,4 @@
-
-export function positionIndexToLineIndex(positionIndex: number, string: string) {
+export function positionToLine(positionIndex: number, string: string) {
 	for (const [ lineNumber, { length } ] of string.split("\n").entries()) {
 		positionIndex -= length + 1
 
@@ -10,4 +9,4 @@ export function positionIndexToLineIndex(positionIndex: number, string: string) 
 	throw new Error("`positionIndex` must be smaller than `string`'s length")
 }
 
-export default positionIndexToLineIndex
+export default positionToLine
