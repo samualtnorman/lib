@@ -9,7 +9,7 @@ export function writeFilePersistent(
 	options?: { encoding?: string | null | undefined, mode?: string | number | undefined, flag?: string | number | undefined } | string | null
 ) {
 	return writeFile(path, data, options).catch(async (error: NodeJS.ErrnoException) => {
-		if (error.code != "ENOENT")
+		if (error.code != `ENOENT`)
 			throw error
 
 		await makeDirectory(getPathDirectory(path), { recursive: true })

@@ -1,5 +1,5 @@
 export function isRecord(value: unknown): value is Record<string, unknown> {
-	return !!value && typeof value == "object"
+	return Boolean(value) && typeof value == `object`
 }
 
 export default isRecord

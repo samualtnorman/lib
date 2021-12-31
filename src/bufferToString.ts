@@ -9,6 +9,7 @@ export function bufferToString(bufferU8View: Uint8Array) {
 }
 
 export function stringToBuffer(string: string) {
-	const u16Array = new Uint16Array(string.split("").map(char => char.charCodeAt(0)))
-	return new Uint8Array(u16Array.buffer.slice((u16Array[0] & 0b11111111) + 1))
+	const u16Array = new Uint16Array(string.split(``).map(char => char.charCodeAt(0)))
+
+	return new Uint8Array(u16Array.buffer.slice((u16Array[0]! & 0xFF) + 1))
 }

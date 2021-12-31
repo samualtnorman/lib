@@ -1,4 +1,4 @@
-export function clearObject(object: {}, prototype = Object.prototype) {
+export function clearObject(object: Record<string, unknown>, prototype = Object.prototype) {
 	for (const propertyName of Object.getOwnPropertyNames(object))
 		delete (object as any)[propertyName]
 

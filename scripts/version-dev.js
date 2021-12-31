@@ -4,17 +4,18 @@ import semver from "semver"
 import { promisify } from "util"
 
 const { readFile } = fs.promises
-const execute = promisify(execute_)
 
-;(async () => {
+const execute = promisify(execute_);
+
+(async () => {
 	const [ packageJSONFile, { stdout: gitGetHashStdout } ] = await Promise.all([
-		readFile("package.json", { encoding: "utf-8" }),
-		execute("git rev-parse --short HEAD")
+		readFile(`package.json`, { encoding: `utf-8` }),
+		execute(`git rev-parse --short HEAD`)
 	])
 
 	const { stdout, stderr } = await execute(
 		`npm version ${
-			semver.inc(JSON.parse(packageJSONFile).version, "minor")
+			semver.inc(JSON.parse(packageJSONFile).version, `minor`)
 		}-${
 			gitGetHashStdout.trim()
 		}`

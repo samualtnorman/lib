@@ -3,13 +3,13 @@ import { dirname as pathDirectory } from "path"
 
 const { mkdir: makeDirectory, copyFile } = fsPromises
 
-export function copyFilePersistent(src: PathLike, dest: string, flags?: number) {
-	return copyFile(src, dest, flags).catch(async (error: NodeJS.ErrnoException) => {
-		if (error.code != "ENOENT")
+export function copyFilePersistent(source: PathLike, destination: string, flags?: number) {
+	return copyFile(source, destination, flags).catch(async (error: NodeJS.ErrnoException) => {
+		if (error.code != `ENOENT`)
 			throw error
 
-		await makeDirectory(pathDirectory(dest), { recursive: true })
-		await copyFile(src, dest, flags)
+		await makeDirectory(pathDirectory(destination), { recursive: true })
+		await copyFile(source, destination, flags)
 	})
 }
 

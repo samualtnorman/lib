@@ -3,22 +3,23 @@ import commonJS from "@rollup/plugin-commonjs"
 import nodeResolve from "@rollup/plugin-node-resolve"
 import { promises as fsPromises } from "fs"
 import { terser } from "rollup-plugin-terser"
-import packageConfig from "./package.json"
+import packageConfig_ from "./package.json"
 
 const { readdir: readDirectory } = fsPromises
+const /** @type {any} */ packageConfig = packageConfig_
 
 /** @typedef {import("rollup").RollupOptions} RollupOptions */
 
 const plugins = [
 	babel({
-		babelHelpers: "bundled",
-		extensions: [ ".ts" ]
+		babelHelpers: `bundled`,
+		extensions: [ `.ts` ]
 	}),
 	commonJS(),
-	nodeResolve({ extensions: [ ".ts" ] })
+	nodeResolve({ extensions: [ `.ts` ] })
 ]
 
-const sourceDirectory = "src"
+const sourceDirectory = `src`
 const findFilesPromise = findFiles(sourceDirectory)
 
 /** @type {(command: Record<string, unknown>) => Promise<RollupOptions>} */
@@ -34,66 +35,41 @@ export default async ({ w }) => {
 	return {
 		input: Object.fromEntries(
 			(await findFilesPromise)
-				.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
+				.filter(path => path.endsWith(`.ts`) && !path.endsWith(`.d.ts`))
 				.map(path => [ path.slice(sourceDirectory.length + 1, -3), path ])
 		),
-		output: {
-			dir: "dist"
-		},
+		output: { dir: `dist` },
 		plugins,
 		external: [
-			..."dependencies" in packageConfig
-				? Object.keys(packageConfig["dependencies"])
+			...`dependencies` in packageConfig
+				? Object.keys(packageConfig.dependencies)
 				: []
 		]
 	}
 }
 
 /**
- * @param path the directory to start recursively finding files in
- * @param filter either a blacklist or a filter function that returns false to ignore file name
+ * @param {string} path the directory to start recursively finding files in
+ * @param {string[] | ((name: string) => boolean)} filter either a blacklist or a filter function that returns false to ignore file name
+ * @param {string[]} paths
  * @returns promise that resolves to array of found files
- * @type {(path: string, filter?: string[] | ((name: string) => boolean)) => Promise<string[]>}
  */
-async function findFiles(path, filter = []) {
-	const paths = []
-	let /** @type {(name: string) => boolean} */ filterFunction
+ async function findFiles(path, filter = [], paths = []) {
+	const filterFunction = Array.isArray(filter)
+		? name => !filter.includes(name)
+		: filter
 
-	if (Array.isArray(filter))
-		filterFunction = name => !filter.includes(name)
-	else
-		filterFunction = filter
-
-	for (const dirent of await readDirectory(path, { withFileTypes: true })) {
+	await Promise.all((await readDirectory(path, { withFileTypes: true })).map(async dirent => {
 		if (!filterFunction(dirent.name))
-			continue
+			return
 
 		const direntPath = `${path}/${dirent.name}`
 
 		if (dirent.isDirectory())
-			await findFilesSub(direntPath, filterFunction, paths)
+			await findFiles(direntPath, filterFunction, paths)
 		else if (dirent.isFile())
 			paths.push(direntPath)
-	}
+	}))
 
-	return paths
-}
-
-async function findFilesSub(path, filterFunction, paths) {
-	const promises = []
-
-	for (const dirent of await readDirectory(path, { withFileTypes: true })) {
-		if (!filterFunction(dirent.name))
-			continue
-
-		const direntPath = `${path}/${dirent.name}`
-
-		if (dirent.isDirectory())
-			promises.push(findFilesSub(direntPath, filterFunction, paths))
-		else if (dirent.isFile())
-			paths.push(direntPath)
-	}
-
-	await Promise.all(promises)
 	return paths
 }
