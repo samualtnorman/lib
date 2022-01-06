@@ -1,12 +1,12 @@
 import babel from "@rollup/plugin-babel"
 import commonJS from "@rollup/plugin-commonjs"
 import nodeResolve from "@rollup/plugin-node-resolve"
-import { promises as fsPromises } from "fs"
+import fs from "fs"
 import { terser } from "rollup-plugin-terser"
 import packageConfig_ from "./package.json"
 
-const { readdir: readDirectory } = fsPromises
-const /** @type {any} */ packageConfig = packageConfig_
+const { readdir: readDirectory } = fs.promises
+const /** @type {Record<string, any>} */ packageConfig = packageConfig_
 
 /** @typedef {import("rollup").RollupOptions} RollupOptions */
 
@@ -20,7 +20,12 @@ const plugins = [
 ]
 
 const sourceDirectory = `src`
+
 const findFilesPromise = findFiles(sourceDirectory)
+const external = []
+
+if (`dependencies` in packageConfig)
+	external.push(...Object.keys(packageConfig.dependencies))
 
 /** @type {(command: Record<string, unknown>) => Promise<RollupOptions>} */
 export default async ({ w }) => {
@@ -30,7 +35,8 @@ export default async ({ w }) => {
 			keep_classnames: true,
 			keep_fnames: true
 		}))
-	}
+	} else if (`devDependencies` in packageConfig)
+		external.push(...Object.keys(packageConfig.devDependencies))
 
 	return {
 		input: Object.fromEntries(
@@ -38,13 +44,14 @@ export default async ({ w }) => {
 				.filter(path => path.endsWith(`.ts`) && !path.endsWith(`.d.ts`))
 				.map(path => [ path.slice(sourceDirectory.length + 1, -3), path ])
 		),
-		output: { dir: `dist` },
+		output: {
+			dir: `dist`,
+			interop: `auto`
+		},
 		plugins,
-		external: [
-			...`dependencies` in packageConfig
-				? Object.keys(packageConfig.dependencies)
-				: []
-		]
+		external: external.map(name => new RegExp(`^${name}(?:/|$)`)),
+		preserveEntrySignatures: `allow-extension`,
+		treeshake: { moduleSideEffects: false }
 	}
 }
 
