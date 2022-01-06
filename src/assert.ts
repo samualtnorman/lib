@@ -1,6 +1,6 @@
-import { CustomError } from "./CustomError"
+import { createErrorClass } from "."
 
-export class AssertError extends CustomError {}
+export const AssertError = createErrorClass(`AssertError`)
 
 export function assert(value: any, message = `assertion failed`): asserts value {
 	if (!value)
