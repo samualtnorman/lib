@@ -1,7 +1,7 @@
-import { promises as fsPromises } from "fs"
+import fs from "fs"
 import { dirname as getPathDirectory } from "path"
 
-const { writeFile, mkdir: makeDirectory } = fsPromises
+const { writeFile, mkdir: makeDirectory } = fs.promises
 
 export function writeFilePersistent(
 	path: string,
