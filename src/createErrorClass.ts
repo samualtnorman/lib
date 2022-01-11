@@ -1,7 +1,7 @@
 export function createErrorClass(name: `${string}Error`) {
 	const class_ = { [name]: class extends Error {} }[name]!
 
-	class_.prototype.name = name
+	Object.defineProperty(class_.prototype, `name`, { value: name })
 
 	return class_
 }
