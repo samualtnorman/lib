@@ -1,13 +1,12 @@
-export function clearObject(object: Record<string, unknown>, prototype = Object.prototype) {
+export function clearObject(object: Record<string | symbol, any>, prototype?: object | null): asserts object is Record<string | symbol, unknown> {
 	for (const propertyName of Object.getOwnPropertyNames(object))
-		delete (object as any)[propertyName]
+		delete object[propertyName]
 
 	for (const propertySymbol of Object.getOwnPropertySymbols(object))
-		delete (object as any)[propertySymbol]
+		delete object[propertySymbol]
 
-	Object.setPrototypeOf(object, prototype)
-
-	return object
+	if (prototype !== undefined)
+		Object.setPrototypeOf(object, prototype)
 }
 
 export default clearObject
