@@ -25,3 +25,5 @@ export { tryCatch } from "./tryCatch"
 export { wait } from "./wait"
 export { writeFilePersistent } from "./writeFilePersistent"
 export { createErrorClass } from "./createErrorClass"
+
+export type LaxPartial<T> = { [P in keyof T]?: T[P] | undefined }
