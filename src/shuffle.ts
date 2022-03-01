@@ -1,6 +1,14 @@
 export function shuffle<T>(array: T[]): T[] {
-	for (let index = array.length; index;)
-		array.push(array.splice(Math.floor(Math.random() * index--), 1)[0]!)
+	let index = array.length
+
+	while (index) {
+		const randomIndex = Math.floor(Math.random() * index)
+		const randomItem = array[randomIndex]!
+
+		index--
+		array[randomIndex] = array[index]!
+		array[index] = randomItem
+	}
 
 	return array
 }
