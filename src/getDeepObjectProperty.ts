@@ -1,6 +1,6 @@
 export function getDeepObjectProperty(object: any, keys: (string | symbol)[]) {
 	for (const key of keys) {
-		if (object == null)
+		if (object == undefined)
 			return object
 
 		object = object[key]
