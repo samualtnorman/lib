@@ -10,10 +10,12 @@ const { writeFile, readFile } = fs.promises;
 	delete packageConfig.scripts
 
 	for (let name of await findFiles(`dist`)) {
+		name = `.${name.slice(4)}`
+
 		if (!name.endsWith(`.d.ts`))
 			continue
 
-		name = `.${name.slice(4, -5)}`
+		name = name.slice(0, -5)
 
 		const nameWithExtension = `${name}.js`
 
@@ -23,5 +25,5 @@ const { writeFile, readFile } = fs.promises;
 			packageConfig.exports[name.slice(0, -6)] = nameWithExtension
 	}
 
-	await writeFile(`dist/package.json`, JSON.stringify(packageConfig, null, `\t`))
+	await writeFile(`dist/package.json`, JSON.stringify(packageConfig, undefined, `\t`))
 })()

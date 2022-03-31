@@ -4,7 +4,6 @@ import semver from "semver"
 import { promisify } from "util"
 
 const { readFile } = fs.promises
-
 const execute = promisify(execute_);
 
 (async () => {

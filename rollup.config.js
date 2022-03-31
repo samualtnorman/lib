@@ -6,9 +6,10 @@ import { terser } from "rollup-plugin-terser"
 import packageConfig_ from "./package.json"
 
 const { readdir: readDirectory } = fs.promises
-const /** @type {Record<string, any>} */ packageConfig = packageConfig_
 
 /** @typedef {import("rollup").RollupOptions} RollupOptions */
+
+const /** @type {Record<string, any>} */ packageConfig = packageConfig_
 
 const plugins = [
 	babel({
@@ -61,7 +62,7 @@ export default async ({ w }) => {
  * @param {string[]} paths
  * @returns promise that resolves to array of found files
  */
- async function findFiles(path, filter = [], paths = []) {
+async function findFiles(path, filter = [], paths = []) {
 	const filterFunction = Array.isArray(filter)
 		? name => !filter.includes(name)
 		: filter
