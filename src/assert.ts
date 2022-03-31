@@ -9,7 +9,8 @@ export function assert(value: any, message = `assertion failed`): asserts value 
 
 export default assert
 
-export function ensure<T>(value: T | undefined | null, message = `ensure failed`): T {
+// eslint-disable-next-line @typescript-eslint/no-invalid-void-type
+export function ensure<T>(value: T | undefined | null | void, message = `ensure failed`): T {
 	assert(value, message)
 
 	return value
