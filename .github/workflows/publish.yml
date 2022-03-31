@@ -32,7 +32,7 @@ jobs:
     - run: npm ci
 
     - name: Publish dev
-      if: github.event_name == 'push' || github.event_name == 'pull_request' && github.event.pull_request.merged
+      if: github.event_name == 'push'
       run: |
         node scripts/version-dev
         npm run build
