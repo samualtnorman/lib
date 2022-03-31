@@ -4,9 +4,11 @@
 	"main": "index.js",
 	"private": true,
 	"scripts": {
-		"build": "rm -rf dist && rollup --config && tsc --project src && node scripts/build-package-json && cp LICENSE index.cjs package-lock.json README.md dist",
+		"build": "rollup --config",
 		"dev": "rollup --config --watch",
-		"lint": "eslint ."
+		"lint": "eslint .; tsc",
+		"package": "rm -rf dist && rollup --config && npm run gen-types && node scripts/build-package-json && cp LICENSE package-lock.json README.md index.cjs dist",
+		"gen-types": "tsc --project src --declaration true --emitDeclarationOnly true --noEmit false --outDir dist"
 	},
 	"repository": {
 		"type": "git",
