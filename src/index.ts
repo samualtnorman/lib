@@ -27,3 +27,4 @@ export { wait } from "./wait"
 export { writeFilePersistent } from "./writeFilePersistent"
 
 export type LaxPartial<T> = { [P in keyof T]?: T[P] | undefined }
+export type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string]: JSONValue }
