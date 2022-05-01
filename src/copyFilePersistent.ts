@@ -1,7 +1,6 @@
-import fs, { PathLike } from "fs"
+import { PathLike } from "fs"
+import { copyFile, mkdir as makeDirectory } from "fs/promises"
 import { dirname as getPathDirectory } from "path"
-
-const { mkdir: makeDirectory, copyFile } = fs.promises
 
 export function copyFilePersistent(source: PathLike, destination: string, flags?: number) {
 	return copyFile(source, destination, flags).catch(async (error: NodeJS.ErrnoException) => {

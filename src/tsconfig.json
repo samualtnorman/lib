@@ -4,8 +4,7 @@
 		"noUncheckedIndexedAccess": true,
 		"strict": true,
 		"useUnknownInCatchVariables": true,
-		"strictNullChecks": true,
-		"module": "ES2020"
+		"strictNullChecks": true
 	},
 	"extends": "../tsconfig.json",
 	"include": [ "**/*" ]

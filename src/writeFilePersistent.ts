@@ -1,19 +1,17 @@
-import fs from "fs"
+import { mkdir as makeDirectory, writeFile } from "fs/promises"
 import { dirname as getPathDirectory } from "path"
-
-const { writeFile, mkdir: makeDirectory } = fs.promises
+import { RemoveFirst } from "."
 
 export function writeFilePersistent(
 	path: string,
-	data: any,
-	options?: { encoding?: string | null | undefined, mode?: string | number | undefined, flag?: string | number | undefined } | string | null
+	...restOfWriteFileArguments: RemoveFirst<Parameters<typeof writeFile>>
 ) {
-	return writeFile(path, data, options).catch(async (error: NodeJS.ErrnoException) => {
+	return writeFile(path, ...restOfWriteFileArguments).catch(async (error: NodeJS.ErrnoException) => {
 		if (error.code != `ENOENT`)
 			throw error
 
 		await makeDirectory(getPathDirectory(path), { recursive: true })
-		await writeFile(path, data, options)
+		await writeFile(path, ...restOfWriteFileArguments)
 	})
 }
 

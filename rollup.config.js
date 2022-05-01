@@ -1,11 +1,9 @@
 import babel from "@rollup/plugin-babel"
 import commonJS from "@rollup/plugin-commonjs"
 import nodeResolve from "@rollup/plugin-node-resolve"
-import fs from "fs"
+import { readdir as readDirectory } from "fs/promises"
 import { terser } from "rollup-plugin-terser"
 import packageConfig_ from "./package.json"
-
-const { readdir: readDirectory } = fs.promises
 
 /** @typedef {import("rollup").RollupOptions} RollupOptions */
 

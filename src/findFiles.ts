@@ -1,6 +1,4 @@
-import fs from "fs"
-
-const { readdir: readDirectory } = fs.promises
+import { readdir as readDirectory } from "fs/promises"
 
 /**
  * @param path the directory to start recursively finding files in
