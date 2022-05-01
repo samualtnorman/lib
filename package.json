@@ -7,7 +7,7 @@
 		"build": "rollup --config",
 		"dev": "rollup --config --watch",
 		"lint": "eslint .; tsc",
-		"package": "rm -rf dist && rollup --config && npm run gen-types && node scripts/build-package-json && cp LICENSE package-lock.json README.md index.cjs dist",
+		"package": "rm -rf dist && rollup --config && npm run gen-types && node scripts/build-package-json && cp LICENSE README.md index.cjs dist",
 		"gen-types": "tsc --project src --declaration true --emitDeclarationOnly true --noEmit false --outDir dist"
 	},
 	"repository": {
