@@ -28,3 +28,4 @@ export { writeFilePersistent } from "./writeFilePersistent"
 
 export type LaxPartial<T> = { [P in keyof T]?: T[P] | undefined }
 export type JSONValue = null | boolean | number | string | JSONValue[] | { [key: string]: JSONValue }
+export type RemoveFirst<T extends any[]> = T extends [ any, ...infer Rest ] ? Rest : never
