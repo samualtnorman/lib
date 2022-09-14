@@ -1,25 +1,26 @@
 import { isRecord, objectHasOwn } from "."
 
-export function deeplyEquals(a: Record<string, unknown>, b: Record<string, unknown>) {
-	const aEntries = Object.entries(a)
-
-	if (aEntries.length != Object.keys(b).length)
-		return false
-
-	for (const [ key, aValue ] of aEntries) {
-		if (!objectHasOwn(b, key))
-			return false
-
-		const bValue = b[key]
-
-		if (isRecord(aValue)) {
-			if (!isRecord(bValue) || !deeplyEquals(aValue, bValue))
-				return false
-		} else if (aValue !== bValue)
-			return false
+export const deeplyEquals = <T>(a: T, b: unknown): b is T => {
+	if (Array.isArray(a)) {
+		return (
+			Array.isArray(b) &&
+			a.length == b.length &&
+			a.every((aElement, index) => deeplyEquals(aElement, b[index]))
+		)
 	}
 
-	return true
+	if (isRecord(a)) {
+		const aEntries = Object.entries(a)
+
+		return (
+			!Array.isArray(b) &&
+			isRecord(b) &&
+			aEntries.length == Object.keys(b).length &&
+			aEntries.every(([ key, aValue ]) => objectHasOwn(b, key) && deeplyEquals(aValue, b[key]))
+		)
+	}
+
+	return a === b
 }
 
 export default deeplyEquals
