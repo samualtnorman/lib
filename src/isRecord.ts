@@ -1,5 +1,3 @@
-export function isRecord(value: unknown): value is Record<string, unknown> {
-	return Boolean(value) && typeof value == `object`
-}
+export const isRecord = (value: unknown): value is Record<string, unknown> => Boolean(value) && typeof value == `object`
 
 export default isRecord
