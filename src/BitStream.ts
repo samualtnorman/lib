@@ -57,7 +57,7 @@ export class BitStream {
 		return this.length
 	}
 
-	* [Symbol.iterator]() {
+	*[Symbol.iterator]() {
 		for (let index = 0; index < this.length; index++)
 			yield Boolean(this.buffer[Math.floor(index / 8)]! & (0b1000_0000 >> (index % 8)))
 	}

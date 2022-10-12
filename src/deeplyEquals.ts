@@ -1,4 +1,5 @@
-import { isRecord, objectHasOwn } from "."
+import isRecord from "./isRecord"
+import objectHasOwn from "./objectHasOwn"
 
 export const deeplyEquals = <T>(a: T, b: unknown): b is T => {
 	if (Array.isArray(a)) {

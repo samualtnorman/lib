@@ -1,10 +1,10 @@
 const defaultArgumentComparerFunction = (a: unknown[], b: unknown[]) =>
 	a.length == b.length && a.every((aItem, index) => aItem == b[index])
 
-export const memoizeFunction = <A extends unknown[], R extends unknown>(
+export function memoizeFunction<A extends unknown[], R>(
 	function_: (...arguments_: A) => R,
 	argumentComparerFunction: (a: unknown[], b: unknown[]) => boolean = defaultArgumentComparerFunction
-) => {
+) {
 	const memos: { arguments: A, returnValue: R }[] = []
 
 	return (...arguments_: A): R => {

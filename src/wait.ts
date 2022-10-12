@@ -1,5 +1,2 @@
-export function wait(milliseconds: number) {
-	return new Promise(resolve => setTimeout(resolve, milliseconds))
-}
-
+export const wait = (milliseconds: number) => new Promise(resolve => setTimeout(resolve, milliseconds))
 export default wait

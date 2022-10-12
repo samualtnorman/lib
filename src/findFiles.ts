@@ -6,9 +6,7 @@ import { readdir as readDirectory } from "fs/promises"
  * @returns promise that resolves to array of found files
  */
 export async function findFiles(path: string, filter: string[] | ((name: string) => boolean) = [], paths: string[] = []) {
-	const filterFunction = Array.isArray(filter)
-		? (name: string) => !filter.includes(name)
-		: filter
+	const filterFunction = Array.isArray(filter) ? (name: string) => !filter.includes(name) : filter
 
 	await Promise.all((await readDirectory(path, { withFileTypes: true })).map(async dirent => {
 		if (!filterFunction(dirent.name))

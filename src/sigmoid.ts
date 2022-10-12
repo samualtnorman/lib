@@ -1,5 +1,2 @@
-export function sigmoid(input: number) {
-	return 1 / (1 + (Math.E ** -input))
-}
-
+export const sigmoid = (input: number) => 1 / (1 + (Math.E ** -input))
 export default sigmoid

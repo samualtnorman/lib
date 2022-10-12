@@ -8,7 +8,8 @@ export function copyFilePersistent(source: PathLike, destination: string, flags?
 			throw error
 
 		await makeDirectory(getPathDirectory(destination), { recursive: true })
-		await copyFile(source, destination, flags)
+
+		return copyFile(source, destination, flags)
 	})
 }
 

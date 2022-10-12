@@ -5,8 +5,6 @@ import { readdir as readDirectory } from "fs/promises"
 import { terser } from "rollup-plugin-terser"
 import packageConfig_ from "./package.json"
 
-/** @typedef {import("rollup").RollupOptions} RollupOptions */
-
 const /** @type {Record<string, any>} */ packageConfig = packageConfig_
 
 const plugins = [
@@ -19,14 +17,14 @@ const plugins = [
 ]
 
 const sourceDirectory = `src`
-
+// eslint-disable-next-line unicorn/prefer-top-level-await
 const findFilesPromise = findFiles(sourceDirectory)
 const external = []
 
 if (`dependencies` in packageConfig)
 	external.push(...Object.keys(packageConfig.dependencies))
 
-/** @type {(command: Record<string, unknown>) => Promise<RollupOptions>} */
+/** @type {(command: Record<string, unknown>) => Promise<import("rollup").RollupOptions>} */
 export default async ({ w }) => {
 	if (!w) {
 		plugins.push(terser({
@@ -43,10 +41,7 @@ export default async ({ w }) => {
 				.filter(path => path.endsWith(`.ts`) && !path.endsWith(`.d.ts`))
 				.map(path => [ path.slice(sourceDirectory.length + 1, -3), path ])
 		),
-		output: {
-			dir: `dist`,
-			interop: `auto`
-		},
+		output: { dir: `dist`, interop: `auto` },
 		plugins,
 		external: external.map(name => new RegExp(`^${name}(?:/|$)`)),
 		preserveEntrySignatures: `allow-extension`,
@@ -61,9 +56,7 @@ export default async ({ w }) => {
  * @returns promise that resolves to array of found files
  */
 async function findFiles(path, filter = [], paths = []) {
-	const filterFunction = Array.isArray(filter)
-		? name => !filter.includes(name)
-		: filter
+	const filterFunction = Array.isArray(filter) ? name => !filter.includes(name) : filter
 
 	await Promise.all((await readDirectory(path, { withFileTypes: true })).map(async dirent => {
 		if (!filterFunction(dirent.name))

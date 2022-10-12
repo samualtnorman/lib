@@ -1,4 +1,4 @@
-import { createErrorClass } from "."
+import createErrorClass from "./createErrorClass"
 
 export const AssertError = createErrorClass(`AssertError`)
 
