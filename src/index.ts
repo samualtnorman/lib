@@ -8,6 +8,7 @@ export { combineAsyncGeneratorsParallel } from "./combineAsyncGeneratorsParallel
 export { copyFilePersistent } from "./copyFilePersistent"
 export { countHackmudCharacters } from "./countHackmudCharacters"
 export { createErrorClass } from "./createErrorClass"
+export { createLock } from "./createLock"
 export { deeplyEquals } from "./deeplyEquals"
 export { DynamicMap } from "./DynamicMap"
 export { findFiles } from "./findFiles"
