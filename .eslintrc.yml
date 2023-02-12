@@ -93,7 +93,6 @@ rules:
   key-spacing: warn
   "@typescript-eslint/keyword-spacing": warn
   linebreak-style: warn
-  new-parens: warn
   no-multi-spaces: warn
   no-whitespace-before-property: warn
   semi-spacing: warn
@@ -422,3 +421,7 @@ rules:
 
   unicorn/prefer-ternary:
     - warn
+
+  new-parens:
+  - warn
+  - never
