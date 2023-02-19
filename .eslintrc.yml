@@ -414,6 +414,7 @@ rules:
   unicorn/prevent-abbreviations:
     - warn
     - checkFilenames: false
+      allowList: { args: true }
 
   "@typescript-eslint/lines-between-class-members":
     - warn
@@ -425,3 +426,5 @@ rules:
   new-parens:
   - warn
   - never
+
+  unicorn/no-array-reduce: off
