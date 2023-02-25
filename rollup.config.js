@@ -3,10 +3,10 @@ import alias from "@rollup/plugin-alias"
 import { babel } from "@rollup/plugin-babel"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import terser from "@rollup/plugin-terser"
-import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 import MagicString from "magic-string"
 import * as path from "path"
 import { relative as getRelativeFilePath } from "path"
+import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 import packageConfig from "./package.json" assert { type: "json" }
 
 const SOURCE_FOLDER = "src"
