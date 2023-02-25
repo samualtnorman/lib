@@ -9,28 +9,24 @@ import { relative as getRelativeFilePath } from "path"
 import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 import packageConfig from "./package.json" assert { type: "json" }
 
-const SOURCE_FOLDER = "src"
-const MINIFY = true
+const SourceFolder = "src"
+const Minify = true
 
 const externalDependencies = []
 
-if ("dependencies" in packageConfig) {
-	for (const dependency in /** @type {any} */ (packageConfig.dependencies))
-		externalDependencies.push(dependency)
-}
+if ("dependencies" in packageConfig)
+	externalDependencies.push(...Object.keys(packageConfig.dependencies))
 
-if ("optionalDependencies" in packageConfig) {
-	for (const dependency in /** @type {any} */ (packageConfig.optionalDependencies))
-		externalDependencies.push(dependency)
-}
+if ("optionalDependencies" in packageConfig)
+	externalDependencies.push(...Object.keys(packageConfig.optionalDependencies))
 
-export default findFiles(SOURCE_FOLDER).then(foundFiles => /** @type {import("rollup").RollupOptions} */ ({
+export default findFiles(SourceFolder).then(foundFiles => /** @type {import("rollup").RollupOptions} */ ({
 	input: Object.fromEntries(
 		foundFiles
 			.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
-			.map(path => [ path.slice(SOURCE_FOLDER.length + 1, -3), path ])
+			.map(path => [ path.slice(SourceFolder.length + 1, -3), path ])
 	),
-	output: { dir: "dist", chunkFileNames: "[name]-.js", generatedCode: "es2015", interop: "auto", compact: MINIFY },
+	output: { dir: "dist", chunkFileNames: "[name]-.js", generatedCode: "es2015", interop: "auto", compact: Minify },
 	plugins: [
 		babel({
 			babelHelpers: "bundled",
@@ -85,7 +81,7 @@ export default findFiles(SOURCE_FOLDER).then(foundFiles => /** @type {import("ro
 			]
 		}),
 		nodeResolve({ extensions: [ ".ts" ] }),
-		MINIFY && terser({ keep_classnames: true, keep_fnames: true }),
+		Minify && terser({ keep_classnames: true, keep_fnames: true }),
 		{
 			name: "rollup-plugin-shebang",
 			renderChunk(code, { fileName }) {
@@ -97,7 +93,7 @@ export default findFiles(SOURCE_FOLDER).then(foundFiles => /** @type {import("ro
 				return { code: magicString.toString(), map: magicString.generateMap({ hires: true }) }
 			}
 		},
-		alias({ entries: [ { find: /^\//, replacement: `${path.resolve(SOURCE_FOLDER)}/` } ] })
+		alias({ entries: [ { find: /^\//, replacement: `${path.resolve(SourceFolder)}/` } ] })
 	],
 	external:
 		source => externalDependencies.some(dependency => source == dependency || source.startsWith(`${dependency}/`)),
