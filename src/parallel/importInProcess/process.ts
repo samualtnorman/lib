@@ -1,4 +1,4 @@
-import { ChildToMainMessage, ChildToMainMessageKind, MainToChildMessage } from "../shared"
+import { ChildToMainMessageKind, type ChildToMainMessage, type MainToChildMessage } from "../shared"
 
 process.addListener(`message`, async ({ args, functionName, id, path }: MainToChildMessage) => {
 	try {

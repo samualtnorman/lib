@@ -1,3 +1,9 @@
+/** @example
+  * const lock = createLock()
+  *
+  * const lockingFunction = () => lock(async () => {
+  *     // ...
+  * }) */
 export function createLock() {
 	let promise = Promise.resolve()
 

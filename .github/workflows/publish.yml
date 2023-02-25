@@ -1,13 +1,5 @@
 name: Publish
-
-on:
-  push:
-    branches:
-    - main
-
-  release:
-    types:
-    - created
+on: { push: { branches: [ main ] }, release: { types: [ created ] } }
 
 jobs:
   publish:
@@ -16,32 +8,14 @@ jobs:
 
     steps:
     - uses: actions/checkout@v2.4.2
-
-    - name: Setup Node.js environment
-      uses: actions/setup-node@v3.1.1
-      with:
-        node-version: ">=14"
-
-    - name: Setup PNPM
-      uses: pnpm/action-setup@v2.2.1
-      with:
-        version: 7.0.0
-        run_install: true
-
+    - { name: Setup Node.js environment, uses: actions/setup-node@v3.1.1, with: { node-version: ">=14" } }
+    - { name: Setup PNPM, uses: pnpm/action-setup@v2.2.1, with: { version: 7.0.0, run_install: true } }
     - run: git config --global user.email github-action@users.noreply.github.com
     - run: git config --global user.name "Github Action"
     - run: pnpm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
 
     - name: Publish dev
       if: github.event_name == 'push'
-      run: |
-        node scripts/version-dev
-        pnpm package
-        cd dist
-        pnpm publish --tag dev
-    - name: Publish release
-      if: github.event_name == 'release'
-      run: |
-        pnpm package
-        cd dist
-        pnpm publish
+      run: scripts/version-dev.js && pnpm package && cd dist && pnpm publish --tag dev
+
+    - { name: Publish release, if: github.event_name == 'release', run: pnpm package && cd dist && pnpm publish }

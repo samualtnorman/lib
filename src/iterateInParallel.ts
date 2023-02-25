@@ -1,4 +1,7 @@
-export function* iterateInParallel<A, B>(firstIterable: Iterable<A>, secondIterable: Iterable<B>): Generator<[ A, B ], void, void> {
+export function* iterateInParallel<A, B>(
+	firstIterable: Iterable<A>,
+	secondIterable: Iterable<B>
+): Generator<[ A, B ], void, void> {
 	const firstIterator = firstIterable[Symbol.iterator]()
 	const secondIterator = secondIterable[Symbol.iterator]()
 

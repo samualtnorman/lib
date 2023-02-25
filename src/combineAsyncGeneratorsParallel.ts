@@ -4,11 +4,9 @@ export type SelfReferencingPromise<T> = Promise<{
 	promise: SelfReferencingPromise<T>
 }>
 
-/**
- * for combining async generators but when you don't want them iterated through one at a time
- * @param asyncGenerators array of async generators
- * @returns a singular async generator that iterates through {@link asyncGenerators} in parallel
- */
+/** For combining async generators but when you don't want them iterated through one at a time.
+  * @param asyncGenerators Array of async generators
+  * @returns A singular async generator that iterates through {@link asyncGenerators} in parallel */
 export async function* combineAsyncGeneratorsParallel<T>(
 	asyncGenerators: AsyncGenerator<T, void, void>[]
 ): AsyncGenerator<T, void, void> {

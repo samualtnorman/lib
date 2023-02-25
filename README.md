@@ -1,3 +1,3 @@
 # Samual's Library
 
-A collection of common utilities I need
+A collection of common utilities I need.

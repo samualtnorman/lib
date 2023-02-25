@@ -1,5 +1,5 @@
 import { parentPort } from "worker_threads"
-import { ChildToMainMessage, ChildToMainMessageKind, MainToChildMessage } from "../shared"
+import { ChildToMainMessageKind, type ChildToMainMessage, type MainToChildMessage } from "../shared"
 
 parentPort!.on(`message`, async ({ args, functionName, id, path }: MainToChildMessage) => {
 	try {

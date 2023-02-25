@@ -1,6 +1,0 @@
-{
-	"presets": [ // who decided that presets run in reverse order?
-		[ "@babel/preset-env", { "targets": { "node": "14" } } ],
-		[ "@babel/preset-typescript", { "allowDeclareFields": true } ]
-	]
-}

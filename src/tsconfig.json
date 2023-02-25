@@ -4,8 +4,9 @@
 		"noUncheckedIndexedAccess": true,
 		"strict": true,
 		"useUnknownInCatchVariables": true,
-		"strictNullChecks": true
+		"strictNullChecks": true,
+		"paths": { "/": [ "." ], "/*": [ "./*" ] }
 	},
-	"extends": "../tsconfig.json",
+	"extends": "..",
 	"include": [ "**/*" ]
 }

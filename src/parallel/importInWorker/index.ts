@@ -1,6 +1,6 @@
 import { cpus } from "os"
 import { Worker } from "worker_threads"
-import { ChildToMainMessage, ChildToMainMessageKind, Cloneable, MainToChildMessage } from "../shared"
+import { ChildToMainMessageKind, type ChildToMainMessage, type Cloneable, type MainToChildMessage } from "../shared"
 
 const WorkerModulePath = new URL(`worker.js`, import.meta.url)
 const idsToPromiseCallbacks = new Map<number, { resolve: (value: any) => void, reject: (reason: any) => void }>

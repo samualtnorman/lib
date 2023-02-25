@@ -1,9 +1,9 @@
-import { PathLike } from "fs"
+import type { PathLike } from "fs"
 import { copyFile, mkdir as makeDirectory } from "fs/promises"
 import { dirname as getPathDirectory } from "path"
 
-export function copyFilePersistent(source: PathLike, destination: string, flags?: number) {
-	return copyFile(source, destination, flags).catch(async (error: NodeJS.ErrnoException) => {
+export const copyFilePersistent = (source: PathLike, destination: string, flags?: number) =>
+	copyFile(source, destination, flags).catch(async (error: NodeJS.ErrnoException) => {
 		if (error.code != `ENOENT`)
 			throw error
 
@@ -11,6 +11,5 @@ export function copyFilePersistent(source: PathLike, destination: string, flags?
 
 		return copyFile(source, destination, flags)
 	})
-}
 
 export default copyFilePersistent

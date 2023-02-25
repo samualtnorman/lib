@@ -1,4 +1,4 @@
-import getBigIntWidth from "./getBigIntWidth"
+import { getBigIntWidth } from "/getBigIntWidth"
 
 export function toLEB128(integer: bigint) {
 	const width = getBigIntWidth(integer)
