@@ -15,4 +15,4 @@ export default assert
 
 /** Like typescript's non-null assertion operator (postfix `!`), but enforced at runtime.
   * @example ensure(objectOrUndefined, "Got undefined instead of object").property */
-export const ensure = assert as <T>(value: T, message: (() => string) | string) => NonFalsy<T>
+export const ensure = assert as <T>(value: T, message?: (() => string) | string) => NonFalsy<T>
