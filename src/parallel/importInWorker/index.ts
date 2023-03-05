@@ -1,16 +1,19 @@
 import { cpus } from "os"
 import { Worker } from "worker_threads"
-import { ChildToMainMessageKind, type ChildToMainMessage, type Cloneable, type MainToChildMessage } from "../shared"
+import { ChildToMainMessageKind, type ChildToMainMessage, type MainToChildMessage } from "../shared"
+import type { AnyFunction, Async, Entries, Rejecter, Resolver } from "/"
 
-const WorkerModulePath = new URL(`worker.js`, import.meta.url)
-const idsToPromiseCallbacks = new Map<number, { resolve: (value: any) => void, reject: (reason: any) => void }>
+const WorkerModuleURL = new URL(`worker.js`, import.meta.url)
+const idsToPromiseCallbacks = new Map<number, { resolve: Resolver<any>, reject: Rejecter }>
+let idCounter = 0
 
 const taskers = cpus().map(() => {
-	const tasker = { worker: new Worker(WorkerModulePath), tasks: 0 }
+	const tasker = { worker: new Worker(WorkerModuleURL), tasks: 0 }
 
 	tasker.worker.on(`message`, ({ kind, id, value }: ChildToMainMessage) => {
 		const { resolve, reject } = idsToPromiseCallbacks.get(id)!
 
+		idsToPromiseCallbacks.delete(id)
 		tasker.tasks--
 
 		if (kind == ChildToMainMessageKind.Return)
@@ -22,21 +25,24 @@ const taskers = cpus().map(() => {
 	return tasker
 })
 
-let idCounter = 0
-
-export const importInWorker = <T extends (...args: any) => Cloneable>(
-	url: URL,
-	functionName = `default`
-) => ({
-	[functionName](...args: Parameters<T>) {
+/** @example
+  * const { heavyFunction } = importInWorker<typeof import("./heavyFunction.js"), "heavyFunction">(
+  *     new URL("./heavyFunction.js", import.meta.url),
+  *     "heavyFunction"
+  * ) */
+export const importInWorker = <
+	TModule extends {},
+	TName extends Extract<Entries<TModule>, [ string, AnyFunction ]>[0]
+>(url: URL, name: TName) => ({
+	[name](...args: any) {
 		const tasker = taskers.reduce((previous, current) => previous.tasks > current.tasks ? current : previous)
 		const id = idCounter++
 
 		tasker.tasks++
-		tasker.worker.postMessage({ id, path: url.href, functionName, args } satisfies MainToChildMessage)
+		tasker.worker.postMessage({ id, path: url.href, name, args } satisfies MainToChildMessage)
 
-		return new Promise<ReturnType<T>>((resolve, reject) => idsToPromiseCallbacks.set(id, { resolve, reject }))
+		return new Promise((resolve, reject) => idsToPromiseCallbacks.set(id, { resolve, reject }))
 	}
-})[functionName]!
+}) as { [K in TName]: Async<TModule[TName] extends AnyFunction ? TModule[TName] : never> }
 
 export default importInWorker
