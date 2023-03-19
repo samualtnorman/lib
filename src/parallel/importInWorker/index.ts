@@ -31,7 +31,7 @@ const taskers = cpus().map(() => {
   *     "heavyFunction"
   * ) */
 export const importInWorker = <
-	TModule extends {},
+	TModule extends object,
 	TName extends Extract<Entries<TModule>, [ string, AnyFunction ]>[0]
 >(url: URL, name: TName) => ({
 	[name](...args: any) {
