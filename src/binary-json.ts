@@ -10,12 +10,20 @@ const JSONValueKind = {
 	NegativeInt8: 4,
 	Int16: 5,
 	NegativeInt16: 6,
-	Int32: 7,
-	NegativeInt32: 8,
-	Float64: 9,
-	String: 10,
-	Array: 11,
-	Object: 12
+	Int24: 7,
+	NegativeInt24: 8,
+	Int32: 9,
+	NegativeInt32: 10,
+	Int40: 11,
+	NegativeInt40: 12,
+	Int48: 13,
+	NegativeInt48: 14,
+	Int56: 15,
+	NegativeInt56: 16,
+	Float: 17,
+	String: 18,
+	Array: 19,
+	Object: 20
 } as const
 
 const textEncoder = new TextEncoder
@@ -45,42 +53,60 @@ export function serialise(jsonValue: JSONValue): Uint8Array {
 	switch (typeof jsonValue) {
 		case `number`: {
 			if (Number.isInteger(jsonValue)) {
-				if (jsonValue < 0) {
+				let positive = true
+
+				if (jsonValue < 0 || Object.is(jsonValue, -0)) {
 					jsonValue = -jsonValue
-
-					if (jsonValue < 1 << 8)
-						return new Uint8Array([ JSONValueKind.NegativeInt8, jsonValue ])
-
-					if (jsonValue < 1 << 16) {
-						return new Uint8Array(
-							[ JSONValueKind.NegativeInt16, ...new Uint8Array(new Uint16Array([ jsonValue ]).buffer) ]
-						)
-					}
-
-					if (jsonValue < 2 ** 32) {
-						return new Uint8Array(
-							[ JSONValueKind.NegativeInt32, ...new Uint8Array(new Uint32Array([ jsonValue ]).buffer) ]
-						)
-					}
+					positive = false
 				}
 
-				if (jsonValue < 1 << 8)
-					return new Uint8Array([ JSONValueKind.Int8, jsonValue ])
+				if (jsonValue < 2 ** 8)
+					return new Uint8Array([ positive ? JSONValueKind.Int8 : JSONValueKind.NegativeInt8, jsonValue ])
 
-				if (jsonValue < 1 << 16) {
-					return new Uint8Array(
-						[ JSONValueKind.Int16, ...new Uint8Array(new Uint16Array([ jsonValue ]).buffer) ]
-					)
+				if (jsonValue < 2 ** 16) {
+					return new Uint8Array([
+						positive ? JSONValueKind.Int16 : JSONValueKind.NegativeInt16,
+						...new Uint8Array(new Uint16Array([ jsonValue ]).buffer)
+					])
+				}
+
+				if (jsonValue < 2 ** 24) {
+					return new Uint8Array([
+						positive ? JSONValueKind.Int24 : JSONValueKind.NegativeInt24,
+						...new Uint8Array(new Uint32Array([ jsonValue ]).buffer.slice(0, 3))
+					])
 				}
 
 				if (jsonValue < 2 ** 32) {
-					return new Uint8Array(
-						[ JSONValueKind.Int32, ...new Uint8Array(new Uint32Array([ jsonValue ]).buffer) ]
-					)
+					return new Uint8Array([
+						positive ? JSONValueKind.Int32 : JSONValueKind.NegativeInt32,
+						...new Uint8Array(new Uint32Array([ jsonValue ]).buffer)
+					])
+				}
+
+				if (jsonValue < 2 ** 40) {
+					return new Uint8Array([
+						positive ? JSONValueKind.Int40 : JSONValueKind.NegativeInt40,
+						...new Uint8Array(new BigUint64Array([ BigInt(jsonValue) ]).buffer.slice(0, 5))
+					])
+				}
+
+				if (jsonValue < 2 ** 48) {
+					return new Uint8Array([
+						positive ? JSONValueKind.Int48 : JSONValueKind.NegativeInt48,
+						...new Uint8Array(new BigUint64Array([ BigInt(jsonValue) ]).buffer.slice(0, 6))
+					])
+				}
+
+				if (jsonValue < 2 ** 56) {
+					return new Uint8Array([
+						positive ? JSONValueKind.Int56 : JSONValueKind.NegativeInt56,
+						...new Uint8Array(new BigUint64Array([ BigInt(jsonValue) ]).buffer.slice(0, 7))
+					])
 				}
 			}
 
-			return new Uint8Array([ JSONValueKind.Float64, ...new Uint8Array(new Float64Array([ jsonValue ]).buffer) ])
+			return new Uint8Array([ JSONValueKind.Float, ...new Uint8Array(new Float64Array([ jsonValue ]).buffer) ])
 		}
 
 		case `string`: {
@@ -121,61 +147,77 @@ export function deserialise(binaryJSON: Uint8Array, index: { $: number } = { $: 
 		case JSONValueKind.False:
 			return false
 
-		case JSONValueKind.Int8: {
-			const result = binaryJSON[index.$]
-
-			assert(result != undefined, HERE)
-			index.$++
-
-			return result
-		}
-
+		case JSONValueKind.Int8:
 		case JSONValueKind.NegativeInt8: {
 			const result = binaryJSON[index.$]
 
 			assert(result != undefined, HERE)
 			index.$++
 
-			return -result
+			return kind == JSONValueKind.Int8 ? result : -result
 		}
 
-		case JSONValueKind.Int16: {
-			const result = new Uint16Array(binaryJSON.buffer.slice(index.$, index.$ + 2))[0]
-
-			assert(result != undefined, HERE)
-			index.$ += 2
-
-			return result
-		}
-
+		case JSONValueKind.Int16:
 		case JSONValueKind.NegativeInt16: {
 			const result = new Uint16Array(binaryJSON.buffer.slice(index.$, index.$ + 2))[0]
 
 			assert(result != undefined, HERE)
 			index.$ += 2
 
-			return -result
+			return kind == JSONValueKind.Int16 ? result : -result
 		}
 
-		case JSONValueKind.Int32: {
-			const result = new Uint32Array(binaryJSON.buffer.slice(index.$, index.$ + 4))[0]
+		case JSONValueKind.Int24:
+		case JSONValueKind.NegativeInt24: {
+			const result = new Uint32Array(new Uint8Array([ ...binaryJSON.slice(index.$, index.$ + 3), 0 ]).buffer)[0]
 
 			assert(result != undefined, HERE)
-			index.$ += 4
+			index.$ += 3
 
-			return result
+			return kind == JSONValueKind.Int24 ? result : -result
 		}
 
+		case JSONValueKind.Int32:
 		case JSONValueKind.NegativeInt32: {
 			const result = new Uint32Array(binaryJSON.buffer.slice(index.$, index.$ + 4))[0]
 
 			assert(result != undefined, HERE)
 			index.$ += 4
 
-			return -result
+			return kind == JSONValueKind.Int32 ? result : -result
 		}
 
-		case JSONValueKind.Float64: {
+		case JSONValueKind.Int40:
+		case JSONValueKind.NegativeInt40: {
+			const result = new BigUint64Array(new Uint8Array([ ...binaryJSON.slice(index.$, index.$ + 5), 0, 0, 0 ]).buffer)[0]
+
+			assert(result != undefined, HERE)
+			index.$ += 5
+
+			return Number(kind == JSONValueKind.Int40 ? result : -result)
+		}
+
+		case JSONValueKind.Int48:
+		case JSONValueKind.NegativeInt48: {
+			const result = new BigUint64Array(new Uint8Array([ ...binaryJSON.slice(index.$, index.$ + 6), 0, 0 ]).buffer)[0]
+
+			assert(result != undefined, HERE)
+			index.$ += 6
+
+			return Number(kind == JSONValueKind.Int48 ? result : -result)
+		}
+
+		case JSONValueKind.Int56:
+		case JSONValueKind.NegativeInt56: {
+			const result = new BigUint64Array(new Uint8Array([ ...binaryJSON.slice(index.$, index.$ + 7), 0 ]).buffer)[0]
+
+			assert(result != undefined, HERE)
+			index.$ += 7
+
+			return Number(kind == JSONValueKind.Int56 ? result : -result)
+		}
+
+		case JSONValueKind.Float: {
 			const result = new Float64Array(binaryJSON.buffer.slice(index.$, index.$ + 8))[0]
 
 			assert(result != undefined, HERE)
