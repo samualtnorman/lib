@@ -1,4 +1,4 @@
-import type { Rejecter, Resolver, Values } from "/"
+import type { Rejecter, Resolver, Values } from "."
 
 export class PromiseX<T> extends Promise<T> {
 	static readonly State = {

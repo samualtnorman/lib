@@ -1,7 +1,7 @@
 import { cpus } from "os"
 import { Worker } from "worker_threads"
 import { ChildToMainMessageKind, type ChildToMainMessage, type MainToChildMessage } from "../shared"
-import type { AnyFunction, Async, Entries, Rejecter, Resolver } from "/"
+import type { AnyFunction, Async, Entries, Rejecter, Resolver } from "../.."
 
 const WorkerModuleURL = new URL(`worker.js`, import.meta.url)
 const idsToPromiseCallbacks = new Map<number, { resolve: Resolver<any>, reject: Rejecter }>

@@ -1,5 +1,5 @@
 import { assert } from "./assert"
-import { getBigIntWidth } from "/getBigIntWidth"
+import { getBigIntWidth } from "./getBigIntWidth"
 
 export function fromBigInt(integer: bigint): Uint8Array {
 	const width = getBigIntWidth(integer)

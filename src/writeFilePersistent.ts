@@ -1,6 +1,6 @@
 import { mkdir as makeDirectory, writeFile } from "fs/promises"
 import { dirname as getPathDirectory } from "path"
-import type { Slice1 } from "/"
+import type { Slice1 } from "."
 
 export const writeFilePersistent = (
 	path: string,

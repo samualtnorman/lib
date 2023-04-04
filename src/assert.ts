@@ -1,5 +1,5 @@
-import type { NonFalsy } from "/"
-import { createErrorClass } from "/createErrorClass"
+import type { NonFalsy } from "."
+import { createErrorClass } from "./createErrorClass"
 
 export const AssertError = createErrorClass(`AssertError`)
 

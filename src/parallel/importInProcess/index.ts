@@ -2,7 +2,7 @@ import { fork } from "child_process"
 import { cpus } from "os"
 import { fileURLToPath } from "url"
 import { ChildToMainMessageKind, type ChildToMainMessage, type MainToChildMessage } from "../shared"
-import type { AnyFunction, Async, Entries, Rejecter, Resolver } from "/"
+import type { AnyFunction, Async, Entries, Rejecter, Resolver } from "../.."
 
 const ProcessModulePath = fileURLToPath(new URL(`process.js`, import.meta.url))
 const idsToPromiseCallbacks = new Map<number, { resolve: Resolver<any>, reject: Rejecter }>

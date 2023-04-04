@@ -1,4 +1,4 @@
-import type { Cloneable } from "/"
+import type { Cloneable } from ".."
 
 export type MainToChildMessage = { id: number, path: string, name: string, args: Cloneable[] }
 

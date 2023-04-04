@@ -1,6 +1,6 @@
 /* eslint-disable no-await-in-loop */
-import type { LaxPartial } from "/"
-import { wait } from "/wait"
+import type { LaxPartial } from "."
+import { wait } from "./wait"
 
 export type RetryOptions = { attempts: number, retryDelay: number, onError: (error: unknown) => void }
 
