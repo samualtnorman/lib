@@ -79,7 +79,7 @@ export default findFiles(SourceFolder).then(foundFiles => /** @type {import("rol
 			]
 		}),
 		nodeResolve({ extensions: [ ".ts" ] }),
-		Minify && terser({ keep_classnames: true, keep_fnames: true }),
+		Minify && terser({ keep_classnames: true, keep_fnames: true, compress: { passes: Infinity } }),
 		{
 			name: "rollup-plugin-shebang",
 			renderChunk(code, { fileName }) {
