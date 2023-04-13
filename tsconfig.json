@@ -16,6 +16,6 @@
 		"skipLibCheck": true,
 		"module": "ESNext"
 	},
-	"include": [ "*", "scripts/*" ],
+	"include": [ "*", "scripts/*", "src/fibonacci.ts" ],
 	"exclude": [ "index.cjs" ]
 }

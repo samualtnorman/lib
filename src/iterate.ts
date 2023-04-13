@@ -1,16 +1,16 @@
-export function* mapIterable<T, R>(iterable: Iterable<T>, callback: (item: T) => R): Generator<R, void, never> {
+export function* mapIterable<T, R>(iterable: Iterable<T>, callback: (item: T) => R): Generator<R, void, undefined> {
 	for (const item of iterable)
 		yield callback(item)
 }
 
-export function* filterIterable<T>(iterable: Iterable<T>, callback: (item: T) => boolean): Generator<T, void, never> {
+export function* filterIterable<T>(iterable: Iterable<T>, callback: (item: T) => boolean): Generator<T, void, undefined> {
 	for (const item of iterable) {
 		if (callback(item))
 			yield item
 	}
 }
 
-export function* toGenerator<T>(iterable: Iterable<T>): Generator<T, void, never> {
+export function* toGenerator<T>(iterable: Iterable<T>): Generator<T, void, undefined> {
 	for (const item of iterable)
 		yield item
 }
@@ -18,7 +18,7 @@ export function* toGenerator<T>(iterable: Iterable<T>): Generator<T, void, never
 export function* iterateInParallel<A, B>(
 	firstIterable: Iterable<A>,
 	secondIterable: Iterable<B>
-): Generator<[ A, B ], void, never> {
+): Generator<[ A, B ], void, undefined> {
 	const secondIterator = secondIterable[Symbol.iterator]()
 
 	for (const first of firstIterable) {
@@ -34,4 +34,9 @@ export function* iterateInParallel<A, B>(
 
 	if (!secondResult.done)
 		throw new Error(`First iterable finished before second`)
+}
+
+export function* range(start: number, end: number): Generator<number, void, undefined> {
+	for (; start < end; start++)
+		yield start
 }

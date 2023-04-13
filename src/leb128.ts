@@ -1,8 +1,8 @@
 import { assert } from "./assert"
-import { getBigIntWidth } from "./getBigIntWidth"
+import { countBigIntBits } from "./countBigIntBits"
 
 export function fromBigInt(integer: bigint): Uint8Array {
-	const width = getBigIntWidth(integer)
+	const width = Number(countBigIntBits(integer))
 	const u8View = new Uint8Array(Math.ceil(width / 7) + (width % 7 ? 0 : 1))
 
 	for (const byteIndex of u8View.keys())
