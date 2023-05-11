@@ -18,9 +18,10 @@ export type PickByValue<T, U> = { [K in keyof T as T[K] extends U ? K : never]: 
 export type Entries<T> = { [K in keyof T]: [ K, T[K] ] }[keyof T]
 export type FromEntries<U extends [ Key, any ]> = { [TEntry in U as TEntry[0]]: TEntry[1] }
 
+export { BitStream } from "./BitStream"
+export { DynamicMap } from "./DynamicMap"
 export { assert } from "./assert"
 export { asyncReplace } from "./asyncReplace"
-export { BitStream } from "./BitStream"
 export { bufferToString, stringToBuffer } from "./bufferToString"
 export { clamp } from "./clamp"
 export { clearObject } from "./clearObject"
@@ -30,10 +31,8 @@ export { countHackmudCharacters } from "./countHackmudCharacters"
 export { createErrorClass } from "./createErrorClass"
 export { createLock } from "./createLock"
 export { deeplyEquals } from "./deeplyEquals"
-export { DynamicMap } from "./DynamicMap"
 export { findFiles } from "./findFiles"
 export { findMatches } from "./findMatches"
-export { getBigIntWidth } from "./getBigIntWidth"
 export { getDeepObjectProperty } from "./getDeepObjectProperty"
 export { is } from "./is"
 export { isGenerator } from "./isGenerator"

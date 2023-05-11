@@ -1,8 +1,10 @@
+#!node_modules/.bin/rollup --config
 import * as t from "@babel/types"
 import { babel } from "@rollup/plugin-babel"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import terser from "@rollup/plugin-terser"
 import MagicString from "magic-string"
+import { cpus } from "os"
 import { relative as getRelativeFilePath } from "path"
 import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 import packageConfig from "./package.json" assert { type: "json" }
@@ -79,7 +81,12 @@ export default findFiles(SourceFolder).then(foundFiles => /** @type {import("rol
 			]
 		}),
 		nodeResolve({ extensions: [ ".ts" ] }),
-		Minify && terser({ keep_classnames: true, keep_fnames: true, compress: { passes: Infinity } }),
+		Minify && terser(/** @type {Parameters<typeof terser>[0] & { maxWorkers: number }} */ ({
+			keep_classnames: true,
+			keep_fnames: true,
+			compress: { passes: Infinity },
+			maxWorkers: Math.floor(cpus().length / 2)
+		})),
 		{
 			name: "rollup-plugin-shebang",
 			renderChunk(code, { fileName }) {

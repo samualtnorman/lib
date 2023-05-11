@@ -1,6 +1,6 @@
 import { ChildToMainMessageKind, type ChildToMainMessage, type MainToChildMessage } from "../shared"
 
-process.addListener(`message`, async ({ args, name, id, path }: MainToChildMessage) => {
+process.addListener(`message`, (async ({ args, name, id, path }: MainToChildMessage) => {
 	try {
 		process.send!({
 			kind: ChildToMainMessageKind.Return,
@@ -10,4 +10,4 @@ process.addListener(`message`, async ({ args, name, id, path }: MainToChildMessa
 	} catch (error) {
 		process.send!({ kind: ChildToMainMessageKind.Throw, id, value: error as any } satisfies ChildToMainMessage)
 	}
-})
+}) as NodeJS.MessageListener)

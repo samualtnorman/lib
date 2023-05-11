@@ -1,6 +1,5 @@
 export function encode(u8View: Uint8Array): void {
-	// eslint-disable-next-line unicorn/no-useless-spread -- how is this a useless spread?
-	const list = [ ...new Array(256) ].map((_, index) => index)
+	const list = [ ...Array(256) ].map((_, index) => index)
 
 	for (const [ index, byte ] of u8View.entries()) {
 		const encodedByte = list.indexOf(byte)
@@ -12,8 +11,7 @@ export function encode(u8View: Uint8Array): void {
 }
 
 export function decode(u8View: Uint8Array): void {
-	// eslint-disable-next-line unicorn/no-useless-spread
-	const list = [ ...new Array(256) ].map((_, index) => index)
+	const list = [ ...Array(256) ].map((_, index) => index)
 
 	for (const [ viewIndex, byte ] of u8View.entries()) {
 		const decodedByte = list[byte]!

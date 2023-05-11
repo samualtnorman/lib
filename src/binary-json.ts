@@ -237,7 +237,7 @@ export function deserialise(binaryJSON: Uint8Array, index: { $: number } = { $: 
 
 		case JSONValueKind.Array: {
 			const length = Number(leb128.toBigInt(binaryJSON, index))
-			const result: JSONValue = new Array(length)
+			const result: JSONValue = Array(length)
 
 			for (let arrayIndex = 0; arrayIndex < length; arrayIndex++)
 				result[arrayIndex] = deserialise(binaryJSON, index)
