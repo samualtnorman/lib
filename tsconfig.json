@@ -16,6 +16,5 @@
 		"skipLibCheck": true,
 		"module": "ESNext"
 	},
-	"include": [ "*", "scripts/*" ],
-	"exclude": [ "index.cjs" ]
+	"include": [ "*", "scripts/*" ]
 }
