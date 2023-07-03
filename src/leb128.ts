@@ -18,11 +18,10 @@ export function toBigInt(u8View: Uint8Array, index: { $: number } = { $: 0 }): b
 	let offset = 0n
 
 	while (true) {
-		const byte = u8View[index.$]
+		const byte = u8View[index.$++]
 
 		assert(byte != undefined, HERE)
 		result |= (BigInt(byte) & 0b0111_1111n) << offset
-		index.$++
 		offset += 7n
 
 		if (!(byte & 0b1000_0000))
