@@ -5,7 +5,7 @@ import terser from "@rollup/plugin-terser"
 import { here } from "babel-plugin-here"
 import MagicString from "magic-string"
 import { cpus } from "os"
-import { findFiles } from "@samual/lib/findFiles.js"
+import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 import packageConfig from "./package.json" assert { type: "json" }
 
 const SourceFolder = "src"
