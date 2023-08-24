@@ -11,5 +11,3 @@ export function clearObject(
 	if (prototype !== undefined)
 		Object.setPrototypeOf(object, prototype)
 }
-
-export default clearObject

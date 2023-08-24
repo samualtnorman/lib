@@ -12,5 +12,3 @@ export const writeFilePersistent = (
 	await makeDirectory(getPathDirectory(path), { recursive: true })
 	await writeFile(path, ...restOfWriteFileArguments)
 })
-
-export default writeFilePersistent

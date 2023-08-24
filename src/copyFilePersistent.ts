@@ -11,5 +11,3 @@ export const copyFilePersistent = (source: PathLike, destination: string, flags?
 
 		return copyFile(source, destination, flags)
 	})
-
-export default copyFilePersistent

@@ -23,5 +23,3 @@ export const deeplyEquals = <T>(a: T, b: unknown): b is T => {
 
 	return a === b
 }
-
-export default deeplyEquals

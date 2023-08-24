@@ -20,5 +20,3 @@ export function memoizeFunction<A extends unknown[], R>(
 		return newMemo.returnValue
 	}
 }
-
-export default memoizeFunction

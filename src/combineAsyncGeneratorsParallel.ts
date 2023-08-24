@@ -35,5 +35,3 @@ export async function* combineAsyncGeneratorsParallel<T>(
 		promises[promises.indexOf(promise)] = newPromise
 	}
 }
-
-export default combineAsyncGeneratorsParallel

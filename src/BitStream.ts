@@ -83,5 +83,3 @@ export class BitStream {
 		return this.buffer.buffer.slice(0, Math.ceil(this.length / 8))
 	}
 }
-
-export default BitStream

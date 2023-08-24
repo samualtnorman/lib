@@ -5,5 +5,3 @@ export function createErrorClass(name: `${string}Error`) {
 
 	return class_
 }
-
-export default createErrorClass

@@ -17,5 +17,3 @@ export function createLock() {
 		return callback().finally(unlock)
 	}
 }
-
-export default createLock

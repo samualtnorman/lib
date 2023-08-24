@@ -16,5 +16,3 @@ export async function asyncReplace(
 
 	return string.replace(regexp, () => strings[index++]!)
 }
-
-export default asyncReplace

@@ -32,5 +32,3 @@ export async function retry<T>(
 		}
 	}
 }
-
-export default retry

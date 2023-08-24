@@ -3,5 +3,3 @@ export const WhitespaceRegex =
 
 export const countHackmudCharacters = (script: string) =>
 	script.replaceAll(/\/\/.*/g, ``).replaceAll(WhitespaceRegex, ``).length
-
-export default countHackmudCharacters

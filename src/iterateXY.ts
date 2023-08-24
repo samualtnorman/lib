@@ -11,5 +11,3 @@ export function* iterateXY(x = 0, y = 0): Generator<{ x: number, y: number }, ne
 			x--
 	}
 }
-
-export default iterateXY

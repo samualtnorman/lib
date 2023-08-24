@@ -45,5 +45,3 @@ export const importInProcess = <
 		return new Promise((resolve, reject) => idsToPromiseCallbacks.set(id, { resolve, reject }))
 	}
 }) as { [K in TName]: Async<TModule[TName] extends AnyFunction ? TModule[TName] : never> }
-
-export default importInProcess

@@ -8,5 +8,3 @@ export function getDeepObjectProperty(object: any, keys: (string | symbol)[]) {
 
 	return object
 }
-
-export default getDeepObjectProperty

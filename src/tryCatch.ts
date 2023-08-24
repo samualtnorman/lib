@@ -14,5 +14,3 @@ export function tryCatch<CallbackReturn, ThenReturn, CatchReturn>(callback: () =
 
 	return callbackReturn
 }
-
-export default tryCatch

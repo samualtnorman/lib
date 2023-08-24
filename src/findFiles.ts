@@ -24,5 +24,3 @@ export async function findFiles(
 
 	return paths
 }
-
-export default findFiles

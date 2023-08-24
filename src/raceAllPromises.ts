@@ -15,5 +15,3 @@ export async function* raceAllPromises<T>(promises: Promise<T>[]): AsyncGenerato
 		promisesIndex.splice(promisesIndex.indexOf(promise), 1)
 	}
 }
-
-export default raceAllPromises

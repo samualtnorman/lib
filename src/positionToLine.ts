@@ -8,5 +8,3 @@ export function positionToLine(positionIndex: number, string: string) {
 
 	throw new Error(`\`positionIndex\` must be smaller than \`string\`'s length`)
 }
-
-export default positionToLine
