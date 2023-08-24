@@ -22,7 +22,7 @@
 	},
 	"homepage": "https://github.com/samualtnorman/lib#readme",
 	"engines": {
-		"node": ">=16"
+		"node": ">=18"
 	},
 	"types": "index.d.ts",
 	"type": "module",
@@ -38,22 +38,22 @@
 		"*"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "^7.22.5",
-		"@babel/preset-typescript": "^7.22.5",
+		"@babel/preset-env": "^7.22.10",
+		"@babel/preset-typescript": "^7.22.11",
 		"@rollup/plugin-babel": "^6.0.3",
-		"@rollup/plugin-node-resolve": "^15.1.0",
+		"@rollup/plugin-node-resolve": "^15.2.1",
 		"@rollup/plugin-terser": "^0.4.3",
 		"@samual/eslint-config": "^0.0.1",
-		"@samual/lib": "^0.7.0",
-		"@types/node": "^16.18.36",
+		"@samual/lib": "^0.8.1",
+		"@types/node": "^18.17.9",
 		"babel-plugin-here": "^0.0.1",
-		"eslint": "^8.42.0",
-		"magic-string": "^0.30.0",
-		"rollup": "^3.25.1",
-		"semver": "^7.5.1",
-		"typescript": "^5.1.3"
+		"eslint": "^8.47.0",
+		"magic-string": "^0.30.3",
+		"rollup": "^3.28.1",
+		"semver": "^7.5.4",
+		"typescript": "^5.2.2"
 	},
 	"optionalDependencies": {
-		"node-fetch": "^3.3.1"
+		"node-fetch": "^3.3.2"
 	}
 }
