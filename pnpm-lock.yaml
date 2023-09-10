@@ -4,11 +4,6 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
-optionalDependencies:
-  node-fetch:
-    specifier: ^3.3.2
-    version: 3.3.2
-
 devDependencies:
   '@babel/preset-env':
     specifier: ^7.22.15
@@ -1858,6 +1853,7 @@ packages:
     resolution: {integrity: sha512-0R9ikRb668HB7QDxT1vkpuUBtqc53YyAwMwGeUFKRojY/NWKvdZ+9UYtRfGmhqNbRkTSVpMbmyhXipFFv2cb/A==}
     engines: {node: '>= 12'}
     requiresBuild: true
+    dev: true
     optional: true
 
   /debug@4.3.4:
@@ -2114,6 +2110,7 @@ packages:
     dependencies:
       node-domexception: 1.0.0
       web-streams-polyfill: 3.2.1
+    dev: true
     optional: true
 
   /file-entry-cache@6.0.1:
@@ -2165,6 +2162,7 @@ packages:
     requiresBuild: true
     dependencies:
       fetch-blob: 3.2.0
+    dev: true
     optional: true
 
   /fs.realpath@1.0.0:
@@ -2503,6 +2501,7 @@ packages:
     resolution: {integrity: sha512-/jKZoMpw0F8GRwl4/eLROPA3cfcXtLApP0QzLmUT/HuPCZWyB7IY9ZrMeKw2O/nFIqPQB3PVM9aYm0F312AXDQ==}
     engines: {node: '>=10.5.0'}
     requiresBuild: true
+    dev: true
     optional: true
 
   /node-fetch@3.3.2:
@@ -2513,6 +2512,7 @@ packages:
       data-uri-to-buffer: 4.0.1
       fetch-blob: 3.2.0
       formdata-polyfill: 4.0.10
+    dev: true
     optional: true
 
   /node-releases@2.0.13:
@@ -3030,6 +3030,7 @@ packages:
     resolution: {integrity: sha512-e0MO3wdXWKrLbL0DgGnUV7WHVuw9OUvL4hjgnPkIeEvESk74gAITi5G606JtZPp39cd8HA9VQzCIvA49LpPN5Q==}
     engines: {node: '>= 8'}
     requiresBuild: true
+    dev: true
     optional: true
 
   /which@2.0.2:

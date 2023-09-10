@@ -27,10 +27,6 @@
 	"types": "index.d.ts",
 	"type": "module",
 	"exports": {
-		"./fetch": {
-			"browser": "./fetch/browser.js",
-			"default": "./fetch/index.js"
-		},
 		"./*": "./*.js",
 		"./*.js": "./*.js"
 	},
@@ -52,8 +48,5 @@
 		"rollup": "^3.29.0",
 		"semver": "^7.5.4",
 		"typescript": "^5.2.2"
-	},
-	"optionalDependencies": {
-		"node-fetch": "^3.3.2"
 	}
 }
