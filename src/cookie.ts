@@ -18,7 +18,7 @@ export type SetCookie = string & { [SetCookieTag]: SetCookie }
   * const cookies = parseCookies(request.headers.get("cookie"))
   *
   * cookies.get("foo") // "bar" */
-export function parseCookies(cookies: string | undefined): ParsedCookies {
+export function parseCookies(cookies: string | undefined | null): ParsedCookies {
 	const parsedCookies = new Map<string, string>
 
 	if (cookies) {
