@@ -65,7 +65,7 @@ export function setCookie(cookies: ParsedCookies, name: string, value: string): 
   * const cookies = parseCookies(request.headers.get("cookie"))
   *
   * response.headers.set("set-cookie", deleteCookie(cookies, "foo")) */
-function deleteCookie(cookies: ParsedCookies, name: string): SetCookie {
+export function deleteCookie(cookies: ParsedCookies, name: string): SetCookie {
 	(cookies as any as Map<string, string>).delete(name)
 
 	return `${encodeURIComponent(name)}=;max-age=0;path=/;sameSite=lax` as SetCookie
