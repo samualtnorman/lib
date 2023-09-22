@@ -1,11 +1,7 @@
-declare const ParsedCookiesTag: unique symbol
-declare const SetCookieTag: unique symbol
+export const encodeString = (string: string) =>
+	btoa(string).replaceAll(`=`, ``).replaceAll(`+`, `*`).replaceAll(`/`, `-`)
 
-export type ParsedCookies = Pick<
-	Map<string, string>, "get" | "entries" | "has" | "keys" | "size" | "values" | typeof Symbol.iterator
-> & { [ParsedCookiesTag]: ParsedCookies }
-
-export type SetCookie = string & { [SetCookieTag]: SetCookie }
+export const decodeString = (string: string) => atob(string.replaceAll(`*`, `+`).replaceAll(`-`, `/`))
 
 /** @example
   * // client
@@ -18,7 +14,7 @@ export type SetCookie = string & { [SetCookieTag]: SetCookie }
   * const cookies = parseCookies(request.headers.get("cookie"))
   *
   * cookies.get("foo") // "bar" */
-export function parseCookies(cookies: string | undefined | null): ParsedCookies {
+export function parseCookies(cookies: string | undefined | null): Map<string, string> {
 	const parsedCookies = new Map<string, string>
 
 	if (cookies) {
@@ -26,65 +22,48 @@ export function parseCookies(cookies: string | undefined | null): ParsedCookies 
 			const index = cookie.indexOf(`=`)
 
 			if (index == -1)
-				parsedCookies.set(``, decodeURIComponent(cookie))
-			else {
-				parsedCookies
-					.set(decodeURIComponent(cookie.slice(0, index)), decodeURIComponent(cookie.slice(index + 1)))
-			}
+				parsedCookies.set(``, decodeString(cookie))
+			else
+				parsedCookies.set(decodeString(cookie.slice(0, index)), decodeString(cookie.slice(index + 1)))
 		}
 	}
 
-	return parsedCookies as any as ParsedCookies
+	return parsedCookies
 }
+
+/** @example
+  * // client
+  * document.cookie = setCookie("foo", "bar")
+  *
+  * @example
+  * // server
+  * response.headers.set("set-cookie", setCookie("foo", "bar")) */
+export const setCookie = (name: string, value: string, cookieOptions: `;${string}` = `;max-age=31536000;path=/;sameSite=lax`): string =>
+	`${encodeString(name)}=${encodeString(value)}${cookieOptions}`
+
+/** @example
+  * // client
+  * document.cookie = deleteCookie("foo")
+  *
+  * @example
+  * // server
+  * response.headers.set("set-cookie", deleteCookie("foo")) */
+export const deleteCookie = (name: string): string => `${encodeString(name)}=;max-age=0;path=/;sameSite=lax`
 
 /** @example
   * // client
   * const cookies = parseCookies(document.cookie)
   *
-  * document.cookie = setCookie(cookies, "foo", "bar")
+  * for (const value of clearCookies(cookies))
+  * 	document.cookie = value
   *
   * @example
   * // server
   * const cookies = parseCookies(request.headers.get("cookie"))
   *
-  * response.headers.set("set-cookie", setCookie(cookies, "foo", "bar")) */
-export function setCookie(cookies: ParsedCookies, name: string, value: string): SetCookie {
-	(cookies as any as Map<string, string>).set(name, value)
-
-	return `${encodeURIComponent(name)}=${encodeURIComponent(value)};max-age=31536000;path=/;sameSite=lax` as SetCookie
-}
-
-/** @example
-  * // client
-  * const cookies = parseCookies(document.cookie)
-  *
-  * document.cookie = deleteCookie(cookies, "foo")
-  *
-  * @example
-  * // server
-  * const cookies = parseCookies(request.headers.get("cookie"))
-  *
-  * response.headers.set("set-cookie", deleteCookie(cookies, "foo")) */
-export function deleteCookie(cookies: ParsedCookies, name: string): SetCookie {
-	(cookies as any as Map<string, string>).delete(name)
-
-	return `${encodeURIComponent(name)}=;max-age=0;path=/;sameSite=lax` as SetCookie
-}
-
-/** @example
-  * // client
-  * const cookies = parseCookies(document.cookie)
-  *
-  * for (const setCookie of clearCookies(cookies))
-  * 	document.cookie = setCookie
-  *
-  * @example
-  * // server
-  * const cookies = parseCookies(request.headers.get("cookie"))
-  *
-  * for (const setCookie of clearCookies(cookies))
-  * 	response.headers.set("set-cookie", setCookie) */
-export function* clearCookies(cookies: ParsedCookies): Iterable<SetCookie> {
-	for (const name of cookies.keys())
-		yield deleteCookie(cookies, name)
+  * for (const value of clearCookies(cookies))
+  * 	response.headers.set("set-cookie", value) */
+export function* clearCookies(parsedCookies: Map<string, string>): Iterable<string> {
+	for (const name of parsedCookies.keys())
+		yield deleteCookie(name)
 }
