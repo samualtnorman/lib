@@ -48,5 +48,8 @@
 		"rollup": "^3.29.0",
 		"semver": "^7.5.4",
 		"typescript": "^5.2.2"
+	},
+	"optionalDependencies": {
+		"valibot": "^0.17.0"
 	}
 }

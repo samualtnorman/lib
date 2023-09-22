@@ -4,6 +4,11 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+optionalDependencies:
+  valibot:
+    specifier: ^0.17.0
+    version: 0.17.0
+
 devDependencies:
   '@babel/preset-env':
     specifier: ^7.22.15
@@ -3018,6 +3023,12 @@ packages:
     dependencies:
       punycode: 2.3.0
     dev: true
+
+  /valibot@0.17.0:
+    resolution: {integrity: sha512-ykoYfBc4HOH+osdWaFBmeL7yX35bFfKg1WdwHYZhNVuvGIRH5f2gtYT6cnU85XOsOE7R8la5RnVY6yAScWU9qg==}
+    requiresBuild: true
+    dev: false
+    optional: true
 
   /validate-npm-package-license@3.0.4:
     resolution: {integrity: sha512-DpKm2Ui/xN7/HQKCtpZxoRWBhZ9Z0kqtygG8XCgNQ8ZlDnxuQmWhj566j8fN4Cu3/JmbhsDo7fcAJq4s9h27Ew==}
