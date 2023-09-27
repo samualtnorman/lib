@@ -1,5 +1,5 @@
 import * as v from "valibot"
-import * as Cookie from "."
+import * as Cookie from "../cookie"
 
 export type CookieOptions<T extends v.BaseSchema> = { name: string, schema: T }
 export const makeCookieOptions = <T extends v.BaseSchema>(options: CookieOptions<T>) => options
