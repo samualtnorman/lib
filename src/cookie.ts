@@ -1,3 +1,5 @@
+import { tryThen } from "./tryThen"
+
 export const encodeString = (string: string) =>
 	btoa(string).replaceAll(`=`, ``).replaceAll(`+`, `*`).replaceAll(`/`, `-`)
 
@@ -22,9 +24,13 @@ export function parseCookies(cookies: string | undefined | null): Map<string, st
 			const index = cookie.indexOf(`=`)
 
 			if (index == -1)
-				parsedCookies.set(``, decodeString(cookie))
-			else
-				parsedCookies.set(decodeString(cookie.slice(0, index)), decodeString(cookie.slice(index + 1)))
+				tryThen(() => decodeString(cookie), value => parsedCookies.set(``, value))
+			else {
+				tryThen(
+					() => [ decodeString(cookie.slice(0, index)), decodeString(cookie.slice(index + 1)) ],
+					([ key, value ]) => parsedCookies.set(key, value)
+				)
+			}
 		}
 	}
 
