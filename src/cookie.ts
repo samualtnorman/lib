@@ -44,8 +44,8 @@ export function parseCookies(cookies: string | undefined | null): Map<string, st
   * @example
   * // server
   * response.headers.set("set-cookie", setCookie("foo", "bar")) */
-export const setCookie = (name: string, value: string, cookieOptions: `;${string}` = `;max-age=31536000;path=/;sameSite=lax`): string =>
-	`${encodeString(name)}=${encodeString(value)}${cookieOptions}`
+export const setCookie = (name: string, value: string, attributes: `;${string}` = `;max-age=31536000;path=/;sameSite=lax`): string =>
+	`${encodeString(name)}=${encodeString(value)}${attributes}`
 
 /** @example
   * // client
