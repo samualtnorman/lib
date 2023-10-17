@@ -1,7 +1,7 @@
 import * as v from "valibot"
 import * as Cookie from "../cookie"
 
-export type CookieOptions<T extends v.BaseSchema> = { name: string, schema: T }
+export type CookieOptions<T extends v.BaseSchema> = { name: string, schema: T, setAttributes?: `;${string}` }
 export const makeCookieOptions = <T extends v.BaseSchema>(options: CookieOptions<T>) => options
 
 export function getCookie<
@@ -20,7 +20,7 @@ export function getCookie<
 }
 
 export const setCookie = <T extends v.BaseSchema>(options: CookieOptions<T>, value: v.Output<T>): string =>
-	Cookie.setCookie(options.name, JSON.stringify(value))
+	Cookie.setCookie(options.name, JSON.stringify(value), options.setAttributes)
 
 export const deleteCookie = <T extends v.BaseSchema>(options: CookieOptions<T>): string =>
 	Cookie.deleteCookie(options.name)
