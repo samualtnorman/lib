@@ -22,7 +22,7 @@
 	},
 	"homepage": "https://github.com/samualtnorman/lib#readme",
 	"engines": {
-		"node": ">=18"
+		"node": ">=20"
 	},
 	"types": "index.d.ts",
 	"type": "module",
