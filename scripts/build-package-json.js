@@ -16,5 +16,5 @@ try {
 }
 
 makeDirectorySync("dist", { recursive: true })
-writeFileSync("dist/package.json", JSON.stringify(packageConfig, undefined, "\t"))
+writeFileSync("dist/package.json", JSON.stringify(packageConfig))
 process.exit()
