@@ -24,7 +24,6 @@
 	"engines": {
 		"node": ">=20"
 	},
-	"types": "index.d.ts",
 	"type": "module",
 	"exports": {
 		"./*": "./*.js",
