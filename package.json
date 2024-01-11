@@ -33,22 +33,22 @@
 		"*"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "^7.23.2",
-		"@babel/preset-typescript": "^7.23.2",
+		"@babel/preset-env": "^7.23.8",
+		"@babel/preset-typescript": "^7.23.3",
 		"@rollup/plugin-babel": "^6.0.4",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
-		"@samual/eslint-config": "^0.0.1",
-		"@samual/lib": "^0.8.1",
-		"@types/node": "^20.8.10",
+		"@samual/eslint-config": "^0.0.3",
+		"@samual/lib": "^0.9.0",
+		"@types/node": "^20.11.0",
 		"babel-plugin-here": "^0.0.1",
-		"eslint": "^8.52.0",
+		"eslint": "^8.56.0",
 		"magic-string": "^0.30.5",
-		"rollup": "^4.2.0",
+		"rollup": "^4.9.4",
 		"semver": "^7.5.4",
-		"typescript": "^5.2.2"
+		"typescript": "^5.3.3"
 	},
 	"optionalDependencies": {
-		"valibot": "^0.20.1"
+		"valibot": "^0.25.0"
 	}
 }
