@@ -49,6 +49,7 @@
 		"typescript": "^5.3.3"
 	},
 	"optionalDependencies": {
+		"bleb": "0.1.0-c7d5a0b",
 		"valibot": "^0.25.0"
 	}
 }

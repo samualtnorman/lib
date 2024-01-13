@@ -46,12 +46,11 @@ export default findFiles(SourceFolder).then(foundFiles => /** @type {import("rol
 		{
 			name: "rollup-plugin-shebang",
 			renderChunk(code, { fileName }) {
-				if (!fileName.startsWith("bin/"))
-					return undefined
+				if (fileName.startsWith("bin/")) {
+					const magicString = new MagicString(code).prepend("#!/usr/bin/env node\n")
 
-				const magicString = new MagicString(code).prepend("#!/usr/bin/env node\n")
-
-				return { code: magicString.toString(), map: magicString.generateMap({ hires: true }) }
+					return { code: magicString.toString(), map: magicString.generateMap({ hires: true }) }
+				}
 			}
 		}
 	],
