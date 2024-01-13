@@ -1,9 +1,9 @@
-export class DynamicMap<K, V> extends Map<K, V> {
+export class Cache<K, V> extends Map<K, V> {
 	constructor(private readonly fallbackHandler: (key: K) => V) {
 		super()
 	}
 
-	override get(key: K) {
+	override get(key: K): V {
 		if (super.has(key))
 			return super.get(key)!
 
@@ -15,12 +15,12 @@ export class DynamicMap<K, V> extends Map<K, V> {
 	}
 }
 
-export class DynamicWeakMap<K extends object, V> extends WeakMap<K, V> {
+export class WeakCache<K extends object, V> extends WeakMap<K, V> {
 	constructor(private readonly fallbackHandler: (key: K) => V) {
 		super()
 	}
 
-	override get(key: K) {
+	override get(key: K): V {
 		if (super.has(key))
 			return super.get(key)!
 
