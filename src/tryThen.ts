@@ -3,14 +3,12 @@ export function tryThen<const TCallbackReturn>(
 	then: (value: TCallbackReturn) => void
 ): void {
 	let value
-	let noError = true
 
 	try {
 		value = callback()
 	} catch {
-		noError = false
+		return
 	}
 
-	if (noError)
-		then(value!)
+	then(value!)
 }
