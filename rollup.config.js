@@ -8,8 +8,8 @@ import { cpus } from "os"
 import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 import packageConfig from "./package.json" assert { type: "json" }
 
-const SourceFolder = "src"
-const Minify = true
+const SOURCE_FOLDER = "src"
+const MINIFY = true
 
 const externalDependencies = []
 
@@ -19,13 +19,13 @@ if ("dependencies" in packageConfig)
 if ("optionalDependencies" in packageConfig)
 	externalDependencies.push(...Object.keys(packageConfig.optionalDependencies))
 
-export default findFiles(SourceFolder).then(foundFiles => /** @type {import("rollup").RollupOptions} */ ({
+export default findFiles(SOURCE_FOLDER).then(foundFiles => /** @type {import("rollup").RollupOptions} */ ({
 	input: Object.fromEntries(
 		foundFiles
 			.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
-			.map(path => [ path.slice(SourceFolder.length + 1, -3), path ])
+			.map(path => [ path.slice(SOURCE_FOLDER.length + 1, -3), path ])
 	),
-	output: { dir: "dist", chunkFileNames: "[name]-.js", generatedCode: "es2015", interop: "auto", compact: Minify },
+	output: { dir: "dist", chunkFileNames: "[name]-.js", generatedCode: "es2015", interop: "auto", compact: MINIFY },
 	plugins: [
 		babel({
 			babelHelpers: "bundled",
@@ -37,7 +37,7 @@ export default findFiles(SourceFolder).then(foundFiles => /** @type {import("rol
 			plugins: [ here() ]
 		}),
 		nodeResolve({ extensions: [ ".ts" ] }),
-		Minify && terser(/** @type {Parameters<typeof terser>[0] & { maxWorkers: number }} */ ({
+		MINIFY && terser(/** @type {Parameters<typeof terser>[0] & { maxWorkers: number }} */ ({
 			keep_classnames: true,
 			keep_fnames: true,
 			compress: { passes: Infinity },

@@ -19,3 +19,4 @@ export type Values<T> = T[keyof T]
 export type PickByValue<T, U> = { [K in keyof T as T[K] extends U ? K : never]: T[K] }
 export type Entries<T> = { [K in keyof T]: [ K, T[K] ] }[keyof T]
 export type FromEntries<U extends [ Key, any ]> = { [TEntry in U as TEntry[0]]: TEntry[1] }
+export type Replace<A, B> = Omit<A, keyof B> & B
