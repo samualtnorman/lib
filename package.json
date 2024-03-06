@@ -22,7 +22,8 @@
 	},
 	"homepage": "https://github.com/samualtnorman/lib#readme",
 	"engines": {
-		"node": ">=20"
+		"node": ">=18",
+		"pnpm": "^8.15.4"
 	},
 	"type": "module",
 	"exports": {
@@ -42,7 +43,8 @@
 		"@samual/lib": "^0.9.1",
 		"@total-typescript/ts-reset": "^0.5.1",
 		"@types/babel__preset-env": "^7.9.6",
-		"@types/node": "^20.11.24",
+		"@types/node": "^18.19.22",
+		"@types/semver": "^7.5.8",
 		"babel-plugin-here": "^1.0.0",
 		"eslint": "^8.57.0",
 		"rollup": "^4.12.1",

@@ -3,7 +3,7 @@ export type AnyFunction = (...args: any[]) => any
 export type Resolver<T> = (value: T | PromiseLike<T>) => void
 export type Rejecter = (reason?: unknown) => void
 export type Async<T extends AnyFunction> = (...args: Parameters<T>) => Promise<ReturnType<T>>
-export type JSONValue = null | boolean | number | string | JSONValue[] | { [k: string]: JSONValue }
+export type JsonValue = null | boolean | number | string | JsonValue[] | { [k: string]: JsonValue }
 
 export type Cloneable = undefined | null | boolean | number | string | Cloneable[] | { [k: string]: Cloneable } |
 	ArrayBuffer | DataView | Date | Error | Map<Cloneable, Cloneable> | RegExp | Set<Cloneable> | Uint8ClampedArray |

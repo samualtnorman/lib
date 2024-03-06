@@ -33,8 +33,11 @@ devDependencies:
     specifier: ^7.9.6
     version: 7.9.6
   '@types/node':
-    specifier: ^20.11.24
-    version: 20.11.24
+    specifier: ^18.19.22
+    version: 18.19.22
+  '@types/semver':
+    specifier: ^7.5.8
+    version: 7.5.8
   babel-plugin-here:
     specifier: ^1.0.0
     version: 1.0.0
@@ -1608,8 +1611,8 @@ packages:
     resolution: {integrity: sha512-5+fP8P8MFNC+AyZCDxrB2pkZFPGzqQWUzpSeuuVLvm8VMcorNYavBqoFcxK8bQz4Qsbn4oUEEem4wDLfcysGHA==}
     dev: true
 
-  /@types/node@20.11.24:
-    resolution: {integrity: sha512-Kza43ewS3xoLgCEpQrsT+xRo/EJej1y0kVYGiLFE1NEODXGzTfwiC6tXTLMQskn1X4/Rjlh0MQUvx9W+L9long==}
+  /@types/node@18.19.22:
+    resolution: {integrity: sha512-p3pDIfuMg/aXBmhkyanPshdfJuX5c5+bQjYLIikPLXAUycEogij/c50n/C+8XOA5L93cU4ZRXtn+dNQGi0IZqQ==}
     dependencies:
       undici-types: 5.26.5
     dev: true

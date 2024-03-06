@@ -1,20 +1,23 @@
 #!/usr/bin/env node
-import { writeFileSync, mkdirSync as makeDirectorySync, readdirSync as readDirectorySync } from "fs"
-import packageConfig from "../package.json" assert { type: "json" }
+import { mkdirSync as makeDirectorySync, readdirSync as readDirectorySync, writeFileSync } from "fs"
+import { isRecord } from "../node_modules/@samual/lib/isRecord.js"
+import packageJson_ from "../package.json" assert { type: "json" }
 
-delete packageConfig.private
-delete packageConfig.scripts
-delete packageConfig.devDependencies
+const /** @type {import("@samual/lib").JSONValue} */ packageJson = packageJson_
+
+delete packageJson.private
+delete packageJson.scripts
+delete packageJson.devDependencies
 
 try {
-	/** @type {any} */ (packageConfig).bin = Object.fromEntries(
+	/** @type {any} */ (packageJson).bin = Object.fromEntries(
 		readDirectorySync("dist/bin").map(name => [ name.slice(0, -3), `bin/${name}` ])
 	)
 } catch (error) {
-	if (error.syscall != "scandir" || error.code != "ENOENT" || error.path != "dist/bin")
+	if (isRecord(error) && (error.syscall != "scandir" || error.code != "ENOENT" || error.path != "dist/bin"))
 		throw error
 }
 
 makeDirectorySync("dist", { recursive: true })
-writeFileSync("dist/package.json", JSON.stringify(packageConfig))
+writeFileSync("dist/package.json", JSON.stringify(packageJson, undefined, "\t"))
 process.exit()
