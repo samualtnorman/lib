@@ -1,19 +1,23 @@
 {
+	"include": [ "*", "scripts/*" ],
 	"compilerOptions": {
 		"allowUnreachableCode": false,
 		"allowUnusedLabels": false,
 		"noFallthroughCasesInSwitch": true,
 		"noImplicitOverride": true,
+		"noUncheckedIndexedAccess": true,
+		"noUnusedLocals": true,
 		"noUnusedParameters": true,
+		"strict": true,
+		"module": "ESNext",
 		"moduleResolution": "Node",
 		"resolveJsonModule": true,
+		"types": [ "@types/node", "@total-typescript/ts-reset", "babel-plugin-here/env" ],
 		"noEmit": true,
 		"checkJs": true,
 		"esModuleInterop": true,
 		"forceConsistentCasingInFileNames": true,
 		"target": "ES2022",
-		"skipLibCheck": true,
-		"module": "ESNext"
-	},
-	"include": [ "*", "scripts/*" ]
+		"skipLibCheck": true
+	}
 }

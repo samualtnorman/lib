@@ -1,61 +1,48 @@
 #!node_modules/.bin/rollup --config
+import babelPresetEnv from "@babel/preset-env"
+import babelPresetTypescript from "@babel/preset-typescript"
 import { babel } from "@rollup/plugin-babel"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import terser from "@rollup/plugin-terser"
 import { here } from "babel-plugin-here"
-import MagicString from "magic-string"
 import { cpus } from "os"
+import prettier from "rollup-plugin-prettier"
 import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
-import packageConfig from "./package.json" assert { type: "json" }
 
-const SOURCE_FOLDER = "src"
-const MINIFY = true
+/** @typedef {import("rollup").RollupOptions} RollupOptions */
+/** @typedef {import("@babel/preset-env").Options} BabelPresetEnvOptions */
 
-const externalDependencies = []
+const SOURCE_PATH = "src"
 
-if ("dependencies" in packageConfig)
-	externalDependencies.push(...Object.keys(packageConfig.dependencies))
-
-if ("optionalDependencies" in packageConfig)
-	externalDependencies.push(...Object.keys(packageConfig.optionalDependencies))
-
-export default findFiles(SOURCE_FOLDER).then(foundFiles => /** @type {import("rollup").RollupOptions} */ ({
+export default findFiles(SOURCE_PATH).then(foundFiles => /** @type {RollupOptions} */ ({
 	input: Object.fromEntries(
-		foundFiles
-			.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
-			.map(path => [ path.slice(SOURCE_FOLDER.length + 1, -3), path ])
+		foundFiles.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
+			.map(path => [ path.slice(SOURCE_PATH.length + 1, -3), path ])
 	),
-	output: { dir: "dist", chunkFileNames: "[name]-.js", generatedCode: "es2015", interop: "auto", compact: MINIFY },
+	output: { dir: "dist" },
 	plugins: [
 		babel({
 			babelHelpers: "bundled",
 			extensions: [ ".ts" ],
 			presets: [
-				[ "@babel/preset-env", { targets: { node: "20" } } ],
-				[ "@babel/preset-typescript", { allowDeclareFields: true } ]
+				[ babelPresetEnv, /** @satisfies {BabelPresetEnvOptions} */({ targets: { node: "18.0" } }) ],
+				babelPresetTypescript
 			],
 			plugins: [ here() ]
 		}),
+		terser({ compress: { passes: Infinity }, maxWorkers: Math.floor(cpus().length / 2), mangle: false }),
 		nodeResolve({ extensions: [ ".ts" ] }),
-		MINIFY && terser(/** @type {Parameters<typeof terser>[0] & { maxWorkers: number }} */ ({
-			keep_classnames: true,
-			keep_fnames: true,
-			compress: { passes: Infinity },
-			maxWorkers: Math.floor(cpus().length / 2)
-		})),
-		{
-			name: "rollup-plugin-shebang",
-			renderChunk(code, { fileName }) {
-				if (fileName.startsWith("bin/")) {
-					const magicString = new MagicString(code).prepend("#!/usr/bin/env node\n")
-
-					return { code: magicString.toString(), map: magicString.generateMap({ hires: true }) }
-				}
-			}
-		}
+		prettier({
+			parser: "espree",
+			useTabs: true,
+			tabWidth: 4,
+			arrowParens: "avoid",
+			experimentalTernaries: true,
+			printWidth: 120,
+			semi: false,
+			trailingComma: "none"
+		})
 	],
-	external:
-		source => externalDependencies.some(dependency => source == dependency || source.startsWith(`${dependency}/`)),
 	preserveEntrySignatures: "allow-extension",
 	strictDeprecations: true
 }))

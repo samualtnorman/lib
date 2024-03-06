@@ -33,23 +33,21 @@
 		"*"
 	],
 	"devDependencies": {
-		"@babel/preset-env": "^7.23.8",
+		"@babel/preset-env": "^7.24.0",
 		"@babel/preset-typescript": "^7.23.3",
 		"@rollup/plugin-babel": "^6.0.4",
 		"@rollup/plugin-node-resolve": "^15.2.3",
 		"@rollup/plugin-terser": "^0.4.4",
 		"@samual/eslint-config": "^0.0.3",
-		"@samual/lib": "^0.9.0",
-		"@types/node": "^20.11.0",
-		"babel-plugin-here": "^0.0.1",
-		"eslint": "^8.56.0",
-		"magic-string": "^0.30.5",
-		"rollup": "^4.9.4",
-		"semver": "^7.5.4",
+		"@samual/lib": "^0.9.1",
+		"@total-typescript/ts-reset": "^0.5.1",
+		"@types/babel__preset-env": "^7.9.6",
+		"@types/node": "^20.11.24",
+		"babel-plugin-here": "^1.0.0",
+		"eslint": "^8.57.0",
+		"rollup": "^4.12.1",
+		"rollup-plugin-prettier": "^4.1.1",
+		"semver": "^7.6.0",
 		"typescript": "^5.3.3"
-	},
-	"optionalDependencies": {
-		"bleb": "0.1.0-c7d5a0b",
-		"valibot": "^0.25.0"
 	}
 }

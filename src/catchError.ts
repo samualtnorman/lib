@@ -4,7 +4,7 @@ export function catchError<T>(callback: () => T): [ T, undefined ] | [ undefined
 	} catch (error) {
 		if (error instanceof Error)
 			return [ undefined, error ]
-		
+
 		throw error
 	}
 }
