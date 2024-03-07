@@ -11,18 +11,16 @@
 		"package": "rm -rf dist && pnpm build && pnpm emit-declarations && scripts/build-package-json.js && cp LICENSE README.md dist",
 		"update": "pnpm update --latest !@types/node && pnpm update @types/node"
 	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/samualtnorman/lib.git"
-	},
-	"author": "Samual Norman",
+	"repository": "github:samualtnorman/lib",
+	"author": "Samual Norman <me@samual.uk> (https://samual.uk/)",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/samualtnorman/lib/issues"
+		"url": "https://github.com/samualtnorman/lib/issues",
+		"email": "me@samual.uk"
 	},
 	"homepage": "https://github.com/samualtnorman/lib#readme",
 	"engines": {
-		"node": ">=18",
+		"node": "^18 || >=20",
 		"pnpm": "^8.15.4"
 	},
 	"type": "module",
