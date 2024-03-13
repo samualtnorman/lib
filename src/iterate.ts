@@ -25,7 +25,7 @@ export function* iterateInParallel<A, B>(
 		const secondResult = secondIterator.next()
 
 		if (secondResult.done)
-			throw new Error(`Second iterable finished before first`)
+			throw Error(`Second iterable finished before first`)
 
 		yield [ first, secondResult.value ]
 	}
@@ -33,5 +33,5 @@ export function* iterateInParallel<A, B>(
 	const secondResult = secondIterator.next()
 
 	if (!secondResult.done)
-		throw new Error(`First iterable finished before second`)
+		throw Error(`First iterable finished before second`)
 }

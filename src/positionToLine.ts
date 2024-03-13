@@ -6,5 +6,5 @@ export function positionToLine(positionIndex: number, string: string) {
 			return lineNumber + 1
 	}
 
-	throw new Error(`\`positionIndex\` must be smaller than \`string\`'s length`)
+	throw Error(`\`positionIndex\` must be smaller than \`string\`'s length`)
 }

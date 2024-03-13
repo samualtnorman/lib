@@ -12,7 +12,7 @@ export function createSignal<T>(value: T): [ () => T, (value: T) => void ] {
 		},
 		(newValue: T) => {
 			if (currentEffect)
-				throw new Error(`Must not use signal setter inside an effect`)
+				throw Error(`Must not use signal setter inside an effect`)
 
 			if (!Object.is(value, newValue)) {
 				value = newValue
