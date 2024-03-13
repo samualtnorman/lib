@@ -35,3 +35,12 @@ export function* iterateInParallel<A, B>(
 	if (!secondResult.done)
 		throw Error(`First iterable finished before second`)
 }
+
+export async function asyncIterableToArray<T>(asyncIterable: AsyncIterable<T>): Promise<T[]> {
+	const array = []
+
+	for await (const item of asyncIterable)
+		array.push(item)
+
+	return array
+}
