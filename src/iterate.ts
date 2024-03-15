@@ -44,3 +44,41 @@ export async function asyncIterableToArray<T>(asyncIterable: AsyncIterable<T>): 
 
 	return array
 }
+
+export type SelfReferencingPromise<T> = Promise<{
+	iteratorResult: IteratorResult<T, void>
+	asyncGenerator: AsyncIterator<T, void, void>
+	promise: SelfReferencingPromise<T>
+}>
+
+/** For merging async iterators concurrently.
+  * @param asyncIterators Array of async iterators
+  * @returns An async generator that iterates through {@link asyncIterators} concurrently */
+export async function* mergeAsyncIterators<T>(
+	asyncIterators: AsyncIterator<T, void, void>[]
+): AsyncGenerator<T, void, void> {
+	const promises = asyncIterators.map(asyncGenerator => {
+		const promise: SelfReferencingPromise<T> =
+			asyncGenerator.next().then(iteratorResult => ({ iteratorResult, asyncGenerator, promise }))
+
+		return promise
+	})
+
+	while (asyncIterators.length) {
+		// eslint-disable-next-line no-await-in-loop -- this is on purpose
+		const { iteratorResult, asyncGenerator, promise } = await Promise.race(promises)
+
+		if (iteratorResult.done) {
+			promises.splice(promises.indexOf(promise), 1)
+
+			continue
+		}
+
+		yield iteratorResult.value
+
+		const newPromise: SelfReferencingPromise<T> =
+			asyncGenerator.next().then(iteratorResult => ({ iteratorResult, asyncGenerator, promise: newPromise }))
+
+		promises[promises.indexOf(promise)] = newPromise
+	}
+}
