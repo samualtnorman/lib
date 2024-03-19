@@ -12,7 +12,8 @@ export type Cloneable = undefined | null | boolean | number | string | Cloneable
 
 export type LaxPartial<T> = { [K in keyof T]?: T[K] | undefined }
 export type Slice1<T extends any[]> = T extends [ any, ...infer TRest ] ? TRest : never
-export type NonFalsy<T> = T extends false | 0 | "" | null | undefined | 0n ? never : T
+export type Falsy = false | "" | 0 | 0n | null | undefined
+export type NonFalsy<T> = T extends Falsy ? never : T
 export type Pretty<T> = { [K in keyof T]: T[K] }
 export type Intersect<U> = (U extends any ? (k: U) => void : never) extends ((k: infer I) => void) ? I : never
 export type Values<T> = T[keyof T]
