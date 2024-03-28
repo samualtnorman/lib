@@ -4,7 +4,7 @@ import babelPresetTypescript from "@babel/preset-typescript"
 import { babel } from "@rollup/plugin-babel"
 import { nodeResolve } from "@rollup/plugin-node-resolve"
 import terser from "@rollup/plugin-terser"
-import { here } from "babel-plugin-here"
+import { babelPluginHere } from "babel-plugin-here"
 import { cpus } from "os"
 import prettier from "rollup-plugin-prettier"
 import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
@@ -15,9 +15,9 @@ import { findFiles } from "./node_modules/@samual/lib/findFiles.js"
 const SOURCE_PATH = "src"
 
 export default findFiles(SOURCE_PATH).then(foundFiles => /** @type {RollupOptions} */ ({
-	input: Object.fromEntries(
-		foundFiles.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
-			.map(path => [ path.slice(SOURCE_PATH.length + 1, -3), path ])
+	external: source => !(source.startsWith("/") || source.startsWith(".")),
+	input: Object.fromEntries(foundFiles.filter(path => path.endsWith(".ts") && !path.endsWith(".d.ts"))
+		.map(path => [ path.slice(SOURCE_PATH.length + 1, -3), path ])
 	),
 	output: { dir: "dist" },
 	plugins: [
@@ -26,11 +26,15 @@ export default findFiles(SOURCE_PATH).then(foundFiles => /** @type {RollupOption
 			extensions: [ ".ts" ],
 			presets: [
 				[ babelPresetEnv, /** @satisfies {BabelPresetEnvOptions} */({ targets: { node: "18.0" } }) ],
-				babelPresetTypescript
+				[ babelPresetTypescript, { allowDeclareFields: true, optimizeConstEnums: true } ]
 			],
-			plugins: [ here() ]
+			plugins: [ babelPluginHere() ]
 		}),
-		terser({ compress: { passes: Infinity }, maxWorkers: Math.floor(cpus().length / 2), mangle: false }),
+		terser({
+			compress: { passes: Infinity, unsafe: true, sequences: false },
+			maxWorkers: Math.floor(cpus().length / 2),
+			mangle: false
+		}),
 		nodeResolve({ extensions: [ ".ts" ] }),
 		prettier({
 			parser: "espree",
@@ -44,5 +48,6 @@ export default findFiles(SOURCE_PATH).then(foundFiles => /** @type {RollupOption
 		})
 	],
 	preserveEntrySignatures: "allow-extension",
-	strictDeprecations: true
+	strictDeprecations: true,
+	treeshake: { moduleSideEffects: false }
 }))
