@@ -1,14 +1,13 @@
 {
 	"name": "@samual/lib",
 	"version": "0.10.0",
-	"main": "index.js",
 	"private": true,
 	"scripts": {
 		"lint": "eslint .; tsc; tsc --project src",
 		"build": "rollup --config",
 		"dev": "pnpm build --watch",
 		"emit-declarations": "tsc --project src --declaration --emitDeclarationOnly --noEmit false --outDir dist",
-		"package": "rm -rf dist && pnpm build && pnpm emit-declarations && scripts/build-package-json.js && cp LICENSE README.md dist",
+		"package": "rm -rf dist && pnpm build && pnpm emit-declarations && scripts/emit-package-json.js && cp LICENSE README.md dist",
 		"update": "pnpm update --latest !@types/node && pnpm update @types/node"
 	},
 	"repository": "github:samualtnorman/lib",
@@ -25,12 +24,10 @@
 	},
 	"type": "module",
 	"exports": {
+		".": "./index.js",
 		"./*": "./*.js",
 		"./*.js": "./*.js"
 	},
-	"files": [
-		"*"
-	],
 	"devDependencies": {
 		"@babel/preset-env": "^7.24.3",
 		"@babel/preset-typescript": "^7.24.1",
