@@ -5,5 +5,5 @@ import packageJson from "../package.json" assert { type: "json" }
 
 const hash = spawnSync("git", [ "rev-parse", "--short", "HEAD" ], { encoding: "utf8" }).stdout.trim()
 
-spawnSync("pnpm", [ "version", `${semver.inc(packageJson.version, "minor")}-${hash}` ], { stdio: "inherit" })
+spawnSync("pnpm", [ "version", `${semver.inc(packageJson.version, "patch")}-${hash}` ], { stdio: "inherit" })
 process.exit()
