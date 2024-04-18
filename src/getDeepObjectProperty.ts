@@ -1,10 +1,19 @@
-export function getDeepObjectProperty(object: any, keys: (string | symbol)[]) {
-	for (const key of keys) {
-		if (object == undefined)
-			return object
+import { isRecord } from "./isRecord"
 
-		object = object[key]
+export function getDeepObjectProperty(object: Record<string | symbol, unknown>, keys: (string | symbol)[]) {
+	const lastKey = keys.pop()
+
+	if (!lastKey)
+		return object
+
+	for (const key of keys) {
+		const child = object[key]
+
+		if (!isRecord(child))
+			throw Error(`Expected object, got ${typeof child}`)
+
+		object = child
 	}
 
-	return object
+	return object[lastKey]
 }
