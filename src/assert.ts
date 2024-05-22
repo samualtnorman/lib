@@ -1,7 +1,7 @@
 import type { Falsy, NonFalsy } from "."
-import { createErrorClass } from "./createErrorClass"
 
-export const AssertError = createErrorClass(`AssertError`)
+export class AssertError extends Error {}
+Object.defineProperty(AssertError.prototype, `name`, { value: `AssertError` })
 
 /** @example assert(typeof maybeString == "string", () => `Got ${typeof maybeString} instead of string`) */
 export function assert<T>(value: T, message: ((value: T & Falsy) => string) | string = `assertion failed`): asserts value {
