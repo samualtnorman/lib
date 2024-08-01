@@ -1,4 +1,4 @@
-export function encode(data: { [index: number]: number, length: number }): Uint8Array {
+export function encode(data: ArrayLike<number>): Uint8Array {
 	const result = new Uint8Array(Math.ceil(data.length * (8 / 7)))
 
 	for (let index = result.length; index--;) {
@@ -11,7 +11,7 @@ export function encode(data: { [index: number]: number, length: number }): Uint8
 	return result
 }
 
-export function decode(data: { [index: number]: number, length: number }): Uint8Array {
+export function decode(data: ArrayLike<number>): Uint8Array {
 	const result = new Uint8Array(Math.floor(data.length * (7 / 8)))
 
 	for (let index = result.length; index--;) {
