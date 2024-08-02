@@ -19,7 +19,7 @@
 	},
 	"homepage": "https://github.com/samualtnorman/lib#readme",
 	"engines": {
-		"node": "^18 || >=20",
+		"node": "^18.20 || ^20.10 || >=22",
 		"pnpm": "^9.0.2"
 	},
 	"type": "module",
