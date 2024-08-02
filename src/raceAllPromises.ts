@@ -8,7 +8,6 @@ export async function* raceAllPromises<T>(promises: Promise<T>[]): AsyncGenerato
 	})
 
 	while (promisesIndex.length) {
-		// eslint-disable-next-line no-await-in-loop -- this is on purpose
 		const { value, promise } = await Promise.race(promisesIndex)
 
 		yield value

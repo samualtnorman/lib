@@ -65,7 +65,6 @@ export async function* mergeAsyncIterators<T>(
 	})
 
 	while (asyncIterators.length) {
-		// eslint-disable-next-line no-await-in-loop -- this is on purpose
 		const { iteratorResult, asyncGenerator, promise } = await Promise.race(promises)
 
 		if (iteratorResult.done) {

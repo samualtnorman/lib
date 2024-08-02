@@ -12,7 +12,6 @@ export function fromBigInt(integer: bigint): Uint8Array {
 	return u8View
 }
 
-// eslint-disable-next-line unicorn/no-object-as-default-parameter
 export function toBigInt(u8View: Uint8Array, index: { $: number } = { $: 0 }): bigint {
 	let result = 0n
 	let offset = 0n

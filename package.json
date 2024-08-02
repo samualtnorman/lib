@@ -3,7 +3,7 @@
 	"version": "0.11.0",
 	"private": true,
 	"scripts": {
-		"lint": "eslint .; tsc; tsc --project src",
+		"lint": "tsc; tsc --project src",
 		"build": "rollup --config",
 		"dev": "pnpm build --watch",
 		"emit-declarations": "tsc --project src --declaration --emitDeclarationOnly --noEmit false --outDir dist",
@@ -29,13 +29,11 @@
 		"./*.js": "./*.js"
 	},
 	"devDependencies": {
-		"@samual/eslint-config": "^0.0.3",
 		"@samual/rollup-config": "0.1.1-ac1742d",
 		"@total-typescript/ts-reset": "^0.5.1",
 		"@types/node": "~18.0.6",
 		"@types/semver": "^7.5.8",
 		"babel-plugin-here": "^1.0.1",
-		"eslint": "^8.57.0",
 		"rollup": "^4.16.4",
 		"semver": "^7.6.0",
 		"typescript": "^5.4.5"

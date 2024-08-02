@@ -17,7 +17,6 @@ export function createSignal<T>(value: T): [ () => T, (value: T) => void ] {
 			if (!Object.is(value, newValue)) {
 				value = newValue
 
-				// eslint-disable-next-line unicorn/no-useless-spread -- don't wanna run newly created effects
 				for (const listener of [ ...listeners ])
 					createEffect(listener)
 			}
@@ -41,7 +40,6 @@ export function createMemo<T>(getter: () => T) {
 	const effect = () => {
 		changed = true
 
-		// eslint-disable-next-line unicorn/no-useless-spread -- don't wanna run newly created effects
 		for (const listener of [ ...listeners ])
 			createEffect(listener)
 	}

@@ -1,4 +1,3 @@
-/* eslint-disable no-await-in-loop */
 import type { LaxPartial } from "."
 import { wait } from "./wait"
 
