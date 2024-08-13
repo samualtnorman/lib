@@ -1,5 +1,4 @@
 import { isRecord } from "./isRecord"
-import { objectHasOwn } from "./objectHasOwn"
 
 export const deeplyEquals = <T>(a: T, b: unknown): b is T => {
 	if (Array.isArray(a)) {
@@ -17,7 +16,7 @@ export const deeplyEquals = <T>(a: T, b: unknown): b is T => {
 			!Array.isArray(b) &&
 			isRecord(b) &&
 			aEntries.length == Object.keys(b).length &&
-			aEntries.every(([ key, aValue ]) => objectHasOwn(b, key) && deeplyEquals(aValue, b[key]))
+			aEntries.every(([ key, aValue ]) => Object.hasOwn(b, key) && deeplyEquals(aValue, b[key]))
 		)
 	}
 
