@@ -29,13 +29,13 @@
 		"./*.js": "./*.js"
 	},
 	"devDependencies": {
-		"@samual/rollup-config": "0.1.1-ac1742d",
+		"@samual/rollup-config": "^0.1.1",
 		"@total-typescript/ts-reset": "^0.5.1",
-		"@types/node": "~18.0.6",
+		"@types/node": "~18.19.44",
 		"@types/semver": "^7.5.8",
 		"babel-plugin-here": "^1.0.1",
-		"rollup": "^4.16.4",
-		"semver": "^7.6.0",
-		"typescript": "^5.4.5"
+		"rollup": "^4.20.0",
+		"semver": "^7.6.3",
+		"typescript": "^5.5.4"
 	}
 }
