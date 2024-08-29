@@ -45,7 +45,7 @@ export async function asyncIterableToArray<T>(asyncIterable: AsyncIterable<T>): 
 	return array
 }
 
-export type SelfReferencingPromise<T> = Promise<{
+type SelfReferencingPromise<T> = Promise<{
 	iteratorResult: IteratorResult<T, void>
 	asyncGenerator: AsyncIterator<T, void, void>
 	promise: SelfReferencingPromise<T>
