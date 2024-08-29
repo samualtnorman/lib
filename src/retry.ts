@@ -13,7 +13,7 @@ export async function retry<T>(
 		onError = error => console.error(`Caught`, error, `retrying ${attempts} more time(s) in ${retryDelay}ms`),
 		exponentialBackoff = true
 	}: LaxPartial<RetryOptions> = {}
-) {
+): Promise<T> {
 	while (true) {
 		try {
 			return await callback()

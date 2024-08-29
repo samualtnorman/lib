@@ -4,10 +4,10 @@
   * const lockingFunction = () => lock(async () => {
   *     // ...
   * }) */
-export function createLock() {
+export function createLock(): <T>(callback: () => Promise<T>) => Promise<T> {
 	let promise = Promise.resolve()
 
-	return async <T>(callback: () => Promise<T>): Promise<T> => {
+	return async callback => {
 		const oldPromise = promise
 		let unlock!: () => void
 

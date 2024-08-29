@@ -5,7 +5,7 @@ import type { Slice1 } from "."
 export const writeFilePersistent = (
 	path: string,
 	...restOfWriteFileArguments: Slice1<Parameters<typeof writeFile>>
-) => writeFile(path, ...restOfWriteFileArguments).catch(async (error: NodeJS.ErrnoException) => {
+): Promise<void> => writeFile(path, ...restOfWriteFileArguments).catch(async (error: NodeJS.ErrnoException) => {
 	if (error.code != `ENOENT`)
 		throw error
 

@@ -24,7 +24,7 @@ export function createSignal<T>(value: T): [ () => T, (value: T) => void ] {
 	]
 }
 
-export function createEffect(effect: () => void) {
+export function createEffect(effect: () => void): void {
 	const outerEffect = currentEffect
 
 	currentEffect = effect
@@ -32,7 +32,7 @@ export function createEffect(effect: () => void) {
 	currentEffect = outerEffect
 }
 
-export function createMemo<T>(getter: () => T) {
+export function createMemo<T>(getter: () => T): () => T {
 	const listeners = new Set<() => void>
 	let value: T
 	let changed = true

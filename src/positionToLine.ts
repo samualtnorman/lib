@@ -1,4 +1,4 @@
-export function positionToLine(positionIndex: number, string: string) {
+export function positionToLine(positionIndex: number, string: string): number {
 	for (const [ lineNumber, { length } ] of string.split(`\n`).entries()) {
 		positionIndex -= length + 1
 

@@ -7,7 +7,7 @@ export async function findFiles(
 	path: string,
 	filter: string[] | ((name: string) => boolean) = [],
 	paths: string[] = []
-) {
+): Promise<string[]> {
 	const filterFunction = Array.isArray(filter) ? (name: string) => !filter.includes(name) : filter
 
 	await Promise.all((await readDirectory(path, { withFileTypes: true })).map(async dirent => {

@@ -4,7 +4,7 @@ export function setDeepObjectProperty(
 	object: Record<string | symbol, unknown>,
 	keys: (string | symbol)[],
 	value: unknown
-) {
+): void {
 	const lastKey = keys.pop()
 
 	if (lastKey) {

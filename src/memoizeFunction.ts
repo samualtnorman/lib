@@ -4,7 +4,7 @@ const defaultArgumentComparerFunction = (a: unknown[], b: unknown[]) =>
 export function memoizeFunction<A extends unknown[], R>(
 	function_: (...arguments_: A) => R,
 	argumentComparerFunction: (a: unknown[], b: unknown[]) => boolean = defaultArgumentComparerFunction
-) {
+): (...arguments_: A) => R {
 	const memos: { arguments: A, returnValue: R }[] = []
 
 	return (...arguments_: A): R => {

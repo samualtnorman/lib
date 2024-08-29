@@ -1,6 +1,6 @@
 import { isRecord } from "./isRecord"
 
-export function getDeepObjectProperty(object: Record<string | symbol, unknown>, keys: (string | symbol)[]) {
+export function getDeepObjectProperty(object: Record<string | symbol, unknown>, keys: (string | symbol)[]): unknown {
 	const lastKey = keys.pop()
 
 	if (!lastKey)
