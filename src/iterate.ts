@@ -47,7 +47,7 @@ export async function asyncIterableToArray<T>(asyncIterable: AsyncIterable<T>): 
 
 type SelfReferencingPromise<T> = Promise<{
 	iteratorResult: IteratorResult<T, void>
-	asyncGenerator: AsyncIterator<T, void, void>
+	asyncGenerator: AsyncIterator<T, void, never>
 	promise: SelfReferencingPromise<T>
 }>
 
@@ -55,8 +55,8 @@ type SelfReferencingPromise<T> = Promise<{
   * @param asyncIterators Array of async iterators
   * @returns An async generator that iterates through {@link asyncIterators} concurrently */
 export async function* mergeAsyncIterators<T>(
-	asyncIterators: AsyncIterator<T, void, void>[]
-): AsyncGenerator<T, void, void> {
+	asyncIterators: AsyncIterator<T, void, never>[]
+): AsyncGenerator<T, void, never> {
 	const promises = asyncIterators.map(asyncGenerator => {
 		const promise: SelfReferencingPromise<T> =
 			asyncGenerator.next().then(iteratorResult => ({ iteratorResult, asyncGenerator, promise }))

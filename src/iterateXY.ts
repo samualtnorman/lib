@@ -1,4 +1,4 @@
-export function* iterateXY(x = 0, y = 0): Generator<{ x: number, y: number }, never, never> {
+export function* iterateXY(x = 0, y = 0): Generator<{ x: number, y: number }, void, never> {
 	while (true) {
 		yield { x, y }
 

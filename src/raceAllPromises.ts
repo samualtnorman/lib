@@ -1,4 +1,4 @@
-export async function* raceAllPromises<T>(promises: Promise<T>[]): AsyncGenerator<T, void, void> {
+export async function* raceAllPromises<T>(promises: Promise<T>[]): AsyncGenerator<T, void, never> {
 	const promisesIndex = promises.map(promise => {
 		type SelfReferencingPromise = Promise<{ value: T, promise: SelfReferencingPromise }>
 
