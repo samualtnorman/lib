@@ -7,14 +7,10 @@ export function setDeepObjectProperty(
 ) {
 	const lastKey = keys.pop()
 
-	if (!lastKey)
-		return object
+	if (lastKey) {
+		for (const key of keys)
+			object = isRecord(object[key]) ? object[key] : object[key] = {}
 
-	for (const key of keys) {
-		const child = object[key]
-
-		object = isRecord(child) ? child : object[key] = {}
+		object[lastKey] = value
 	}
-
-	object[lastKey] = value
 }
