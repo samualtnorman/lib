@@ -14,20 +14,21 @@ export async function retry<T>(
 		exponentialBackoff = true
 	}: LaxPartial<RetryOptions> = {}
 ): Promise<T> {
-	while (true) {
+	if (attempts < 1)
+		throw Error(`Retry attempts must be higher than 0`)
+
+	while (--attempts) {
 		try {
 			return await callback()
 		} catch (error) {
-			if (attempts <= 1)
-				throw error
-
-			attempts--
-
-			if (exponentialBackoff)
-				retryDelay *= 2
-
 			onError(error)
-			await wait(retryDelay)
 		}
+
+		await wait(retryDelay)
+
+		if (exponentialBackoff)
+			retryDelay *= 2
 	}
+
+	return callback()
 }
