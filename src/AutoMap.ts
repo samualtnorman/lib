@@ -1,4 +1,4 @@
-export class Cache<K, V> extends Map<K, V> {
+export class AutoMap<K, V> extends Map<K, V> {
 	constructor(private readonly fallbackHandler: (key: K) => V) {
 		super()
 	}
@@ -15,7 +15,7 @@ export class Cache<K, V> extends Map<K, V> {
 	}
 }
 
-export class WeakCache<K extends object, V> extends WeakMap<K, V> {
+export class AutoWeakMap<K extends object, V> extends WeakMap<K, V> {
 	constructor(private readonly fallbackHandler: (key: K) => V) {
 		super()
 	}
