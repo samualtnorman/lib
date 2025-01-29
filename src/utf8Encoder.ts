@@ -1,1 +1,1 @@
-export const utf8Encoder = new TextEncoder
+export const utf8Encoder: TextEncoder = new TextEncoder

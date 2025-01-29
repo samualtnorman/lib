@@ -1,1 +1,1 @@
-export const asciiDecoder = new TextDecoder(`ascii`)
+export const asciiDecoder: TextDecoder = new TextDecoder(`ascii`)
