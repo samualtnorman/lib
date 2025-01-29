@@ -11,7 +11,7 @@ jobs:
     - { name: Setup pnpm, uses: pnpm/action-setup@v4, with: { run_install: true } }
     - run: git config --global user.email github-action@users.noreply.github.com
     - run: git config --global user.name "Github Action"
-    - run: pnpm config set //registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}
+    - run: pnpm config set //registry.npmjs.org/:_authToken=${{secrets.NPM_TOKEN}}
 
     - name: Publish dev
       if: github.event_name == 'push'
