@@ -6,7 +6,8 @@
 		"outDir": "../dist",
 		"types": [ "@types/node", "@total-typescript/ts-reset", "babel-plugin-here/env" ],
 		"checkJs": false,
-		"isolatedDeclarations": true
+		"isolatedDeclarations": true,
+		"emitDeclarationOnly": true
 	},
 	"include": [ "**/*" ]
 }

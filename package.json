@@ -2,14 +2,6 @@
 	"name": "@samual/lib",
 	"version": "0.13.0",
 	"private": true,
-	"scripts": {
-		"lint": "tsc; tsc --project src",
-		"build": "rollup --config",
-		"dev": "pnpm build --watch",
-		"emit-declarations": "tsc --project src --declaration --emitDeclarationOnly --noEmit false --outDir dist",
-		"package": "rm -rf dist && pnpm build && pnpm emit-declarations && scripts/emit-package-json.js && cp LICENSE README.md dist",
-		"update": "pnpm update --latest !@types/node && pnpm update @types/node"
-	},
 	"repository": "github:samualtnorman/lib",
 	"author": "Samual Norman <me@samual.uk> (https://samual.uk/)",
 	"license": "MIT",

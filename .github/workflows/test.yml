@@ -14,5 +14,5 @@ jobs:
       with: { node-version: "${{ matrix.node-version }}" }
 
     - { name: Setup pnpm, uses: pnpm/action-setup@v4, with: { run_install: true } }
-    - run: pnpm package
-    - run: pnpm lint
+    - run: scripts/npm.sh
+    - run: scripts/test.sh
