@@ -2,7 +2,7 @@
 import { mkdirSync as makeDirectorySync, writeFileSync } from "fs"
 import packageJson_ from "../package.json" with { type: "json" }
 
-const { private: _, devDependencies, scripts, engines: { pnpm, ...engines }, ...packageJson } = packageJson_
+const { private: _, devDependencies, engines: { pnpm, ...engines }, ...packageJson } = packageJson_
 
 makeDirectorySync("dist", { recursive: true })
 writeFileSync("dist/package.json", JSON.stringify({ ...packageJson, engines }, undefined, "\t"))
