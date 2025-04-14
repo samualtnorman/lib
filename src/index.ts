@@ -24,3 +24,10 @@ export type Replace<A, B> = Omit<A, keyof B> & B
 
 export type UnionToIntersection<T> =
 	(T extends any ? (_: T) => void : never) extends ((_: infer I) => void) ? I : never
+
+/**
+ * @example
+ * type CheckedString = Brand<string, { readonly CheckedString: unique symbol }[`CheckedString`]>
+ * // ^? type CheckedString = string & { [CheckedString]: true }
+ */
+export type Brand<T, TBrand extends symbol> = T & { [K in TBrand]: true }
